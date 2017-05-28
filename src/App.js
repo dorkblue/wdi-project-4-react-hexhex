@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {BrowserRouter, Link, Route} from 'react-router-dom'
+import {BrowserRouter, Link, Route, Router} from 'react-router-dom'
 import Brochures from './components/brochures/main'
 import Brochure from './components/brochure/main'
 

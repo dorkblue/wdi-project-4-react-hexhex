@@ -1,8 +1,8 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
 import axios from 'axios'
+import $ from 'jquery'
 
-import ListItem from './listitem'
+import ListItem from './ListItem'
 
 class Brochures extends React.Component {
   constructor (props) {
@@ -12,11 +12,27 @@ class Brochures extends React.Component {
     }
   }
 
-  createNew() {
-    return <Route path={'/brochures/123'} />
+  create () {
+    const $newBrochureTitle = $('#newBrochureTitle').val()
+
+    axios({
+      method: 'post',
+      url: this.props.backendURL + 'brochures',
+      data: {
+         title: $newBrochureTitle,
+         draft: true
+         }
+    })
+    .then((response) => {
+      console.log('response here', response.data)
+      this.props.history.push({
+        pathname: `/brochures/${response.data.key}`,
+        state: response.data.body
+      })
+    })
   }
 
-  render() {
+  render () {
     console.log(this.state.allBrochures)
     const ListItems = []
     const allBrochures = this.state.allBrochures
@@ -27,7 +43,8 @@ class Brochures extends React.Component {
       <div>
         <div>
           <h1>Create New</h1>
-          <button onClick={() => this.createNew()}>Here</button>
+          <input type='text' placeholder='Title of Brochure' id='newBrochureTitle' />
+          <button onClick={() => this.create()}>Make New</button>
         </div>
         <div>
           <h1>All Brochures List</h1>
@@ -37,7 +54,7 @@ class Brochures extends React.Component {
     )
   }
 
-  componentDidMount() {
+  componentDidMount () {
     axios({
       method: 'GET',
       url: this.props.backendURL + 'brochures'
