@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
+import {isAuthenticated, storageKey} from '../../script/firebase'
+
 import DescriptionsMain from './descriptions/DescriptionsMain'
 
 const $ = require('jquery')
@@ -89,8 +91,9 @@ class Brochure extends React.Component {
     const brochureKey = this.props.match.params.id
 
     axios
-    .get(`${this.props.backendURL + 'brochures/' + brochureKey}`)
+    .get(`${this.props.backendURL}brochures/${localStorage.KEY_FOR_LOCAL_STORAGE}/${brochureKey}`)
     .then((response) => {
+      console.log('response', response)
       axios
       .all(
         [

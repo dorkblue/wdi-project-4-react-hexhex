@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
 
-import {isAuthenticated} from '../../script/firebase'
+import {isAuthenticated, storageKey} from '../../script/firebase'
 
 // import firebase from '../../script/firebase'
 
@@ -19,15 +19,19 @@ class Brochures extends React.Component {
   }
 
   create () {
+    console.log('create', localStorage[storageKey])
     const $newBrochureTitle = $('#newBrochureTitle').val()
 
     axios({
       method: 'post',
       url: this.props.backendURL + 'brochures',
       data: {
-         title: $newBrochureTitle,
-         draft: true
-         }
+        user: localStorage[storageKey],
+        file: {
+          title: $newBrochureTitle,
+          draft: true
+        }
+      }
     })
     .then((response) => {
       this.props.history.push({
@@ -39,10 +43,12 @@ class Brochures extends React.Component {
 
   render () {
     console.log('this.props brochures', this.props)
-    console.log('localStorage brochures', localStorage)
+    console.log('localStorage brochures', localStorage.KEY_FOR_LOCAL_STORAGE)
     const ListItems = []
     const allBrochures = this.state.allBrochures
     for (var key in allBrochures) {
+      console.log(key)
+      console.log(allBrochures[key])
       ListItems.push(<ListItem key={key} id={key} />)
     }
     return (
@@ -65,7 +71,8 @@ class Brochures extends React.Component {
     if (isAuthenticated()) {
       axios({
         method: 'GET',
-        url: this.props.backendURL + 'brochures'
+        url: `${this.props.backendURL}brochures/${localStorage.KEY_FOR_LOCAL_STORAGE}`
+        // url: this.props.backendURL + 'brochures'
       })
       .then((response) => {
         this.setState({
