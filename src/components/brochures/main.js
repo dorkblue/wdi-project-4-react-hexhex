@@ -2,7 +2,13 @@ import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
 
+import {isAuthenticated} from '../../script/firebase'
+
+// import firebase from '../../script/firebase'
+
 import ListItem from './ListItem'
+
+// const auth = firebase.auth()
 
 class Brochures extends React.Component {
   constructor (props) {
@@ -24,7 +30,6 @@ class Brochures extends React.Component {
          }
     })
     .then((response) => {
-      console.log('response here', response.data)
       this.props.history.push({
         pathname: `/brochures/${response.data.key}`,
         state: response.data.body
@@ -33,7 +38,8 @@ class Brochures extends React.Component {
   }
 
   render () {
-    console.log(this.state.allBrochures)
+    console.log('this.props brochures', this.props)
+    console.log('localStorage brochures', localStorage)
     const ListItems = []
     const allBrochures = this.state.allBrochures
     for (var key in allBrochures) {
@@ -55,18 +61,21 @@ class Brochures extends React.Component {
   }
 
   componentDidMount () {
-    axios({
-      method: 'GET',
-      url: this.props.backendURL + 'brochures'
-    })
-    .then((response) => {
-      console.log('response here from GET /brochures')
-      console.log(response.data)
-
-      this.setState({
-        allBrochures: response.data
+    console.log('isAuthenticated brochures CDM', isAuthenticated())
+    if (isAuthenticated()) {
+      axios({
+        method: 'GET',
+        url: this.props.backendURL + 'brochures'
       })
-    })
+      .then((response) => {
+        this.setState({
+          allBrochures: response.data
+        })
+      })
+      console.log('user logged in')
+    } else {
+      console.log('user not logged in')
+    }
   }
 }
 
