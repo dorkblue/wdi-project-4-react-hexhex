@@ -17,8 +17,10 @@ const storageKey = 'KEY_FOR_LOCAL_STORAGE'
 
 const auth = firebaseApp.auth()
 
+const storage = firebaseApp.storage()
+
 const isAuthenticated = () => {
   return !!auth.currentUser || !!localStorage.getItem(storageKey)
 }
 
-export {firebaseApp, storageKey, auth, isAuthenticated}
+export {firebaseApp, storageKey, auth, isAuthenticated, storage}

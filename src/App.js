@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {BrowserRouter, Link, Route} from 'react-router-dom'
+
+import './App.css'
 import $ from 'jquery'
 import {auth, storageKey} from './script/firebase'
 
@@ -30,7 +32,7 @@ class App extends Component {
         this.setState({
           currentUser: user.uid
         })
-        this.props.history.push('/brochures')
+        window.location = '/'
       })
       .catch((err) => {
         console.log('error', err)

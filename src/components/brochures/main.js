@@ -75,6 +75,7 @@ class Brochures extends React.Component {
         // url: this.props.backendURL + 'brochures'
       })
       .then((response) => {
+        console.log('componentDidMount response', response.data)
         this.setState({
           allBrochures: response.data
         })
