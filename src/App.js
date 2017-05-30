@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {BrowserRouter, Link, Route} from 'react-router-dom'
+import Modal from 'react-modal'
 
 import './App.css'
 import $ from 'jquery'
@@ -10,13 +11,57 @@ import Brochures from './components/brochures/main'
 import Brochure from './components/brochure/main'
 
 const backendURL = 'http://localhost:7777/'
+const appElement = $('#root')
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentUser: null
+      currentUser: null,
+      signinModalOpen: false,
+      registerModalOpen: false
     }
+
+    this.signout = this.signout.bind(this)
+
+    this.signinModalOpen = this.signinModalOpen.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeSigninModal = this.closeSigninModal.bind(this)
+
+    this.registerModalOpen = this.registerModalOpen.bind(this)
+    this.closeRegisterModal = this.closeRegisterModal.bind(this)
+  }
+
+  afterOpenModal () {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00'
+  }
+
+  signinModalOpen () {
+    this.setState({signinModalOpen: true})
+  }
+
+  closeSigninModal () {
+    this.setState({signinModalOpen: false})
+  }
+
+  registerModalOpen () {
+    this.setState({registerModalOpen: true})
+  }
+
+  closeRegisterModal () {
+    this.setState({registerModalOpen: false})
   }
 
   signin (e) {
@@ -65,7 +110,7 @@ class App extends Component {
 
     auth.createUserWithEmailAndPassword($email, $password)
       .then((user) => {
-        this.props.history.push('/brochures')
+        window.location = '/'
       })
       .catch((err) => {
         console.log('error', err)
@@ -85,20 +130,73 @@ class App extends Component {
     })
   }
 
+  signinModal () {
+    return <div>
+      <h1>Sign in MODAL BOX</h1>
+      <button onClick={this.closeSigninModal}>close</button>
+
+      <form id='sign_in_form'>
+        <label>
+          Email:{' '}
+          <input type='email' placeholder='Enter Email' name='email' id='email' />
+        </label>
+        <label>
+          Password:{' '}
+          <input type='password' placeholder='Enter Password' name='password' id='password' />
+        </label>
+        <button onClick={(e) => this.signin(e)}>Sign In</button>
+      </form>
+    </div>
+  }
+
+  registerModal () {
+    return <div>
+      <h1>Register MODAL BOX</h1>
+      <button onClick={this.closeRegisterModal}>close</button>
+
+      <form id='sign_in_form'>
+        <label>
+          Email:{' '}
+          <input type='email' placeholder='Enter Email' name='email' id='email' />
+        </label>
+        <label>
+          Password:{' '}
+          <input type='password' placeholder='Enter Password' name='password' id='password' />
+        </label>
+        <button onClick={(e) => this.register(e)}>Register</button>
+      </form>
+    </div>
+  }
+
   render () {
     console.log('rendering at APP')
-    // console.log('currentUser state', this.state.currentUser)
-    // console.log('localStorage', localStorage)
     return (
       <BrowserRouter>
         <div>
           <NavMain
-            signin={(e) => this.signin(e)}
-            signout={(e) => this.signout(e)}
-            getUser={(e) => this.getUser(e)}
-            register={(e) => this.register(e)}
+            signinModalOpen={this.signinModalOpen}
+            registerModalOpen={this.registerModalOpen}
+            signout={this.signout}
           />
           <main>
+            <button onClick={(e) => this.getUser(e)}>Get User</button>
+            {/* Sign in Modal Box */}
+            <Modal
+              isOpen={this.state.signinModalOpen}
+              // onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeSigninModal}
+              contentLabel='signinModal'>
+              {this.signinModal()}
+            </Modal>
+            {/* Register Modal Box */}
+            <Modal
+              isOpen={this.state.registerModalOpen}
+              // onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeRegisterModal}
+              contentLabel='registerModal'>
+              {this.registerModal()}
+            </Modal>
+
             <Route exact path='/' />
             <Route exact path='/brochures' render={(props) => <Brochures backendURL={backendURL} currentUser={this.state.currentUser} {...props} />} />
             <Route path='/brochures/:id' render={(props) => <Brochure backendURL={backendURL} currentUser={this.state.currentUser} {...props} />} />
