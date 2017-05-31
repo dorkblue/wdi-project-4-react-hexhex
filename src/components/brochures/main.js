@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
 
+import {isAuthenticated, storageKey} from '../../script/firebase'
+
 import ListItem from './ListItem'
 
 class Brochures extends React.Component {
@@ -13,18 +15,21 @@ class Brochures extends React.Component {
   }
 
   create () {
+    console.log('create', localStorage[storageKey])
     const $newBrochureTitle = $('#newBrochureTitle').val()
 
     axios({
       method: 'post',
       url: this.props.backendURL + 'brochures',
       data: {
-         title: $newBrochureTitle,
-         draft: true
-         }
+        user: localStorage[storageKey],
+        file: {
+          title: $newBrochureTitle,
+          draft: true
+        }
+      }
     })
     .then((response) => {
-      console.log('response here', response.data)
       this.props.history.push({
         pathname: `/brochures/${response.data.key}`,
         state: response.data.body
@@ -33,10 +38,13 @@ class Brochures extends React.Component {
   }
 
   render () {
-    console.log(this.state.allBrochures)
+    console.log('this.props brochures', this.props)
+    console.log('localStorage brochures', localStorage.KEY_FOR_LOCAL_STORAGE)
     const ListItems = []
     const allBrochures = this.state.allBrochures
     for (var key in allBrochures) {
+      console.log(key)
+      console.log(allBrochures[key])
       ListItems.push(<ListItem key={key} id={key} />)
     }
     return (
@@ -55,18 +63,23 @@ class Brochures extends React.Component {
   }
 
   componentDidMount () {
-    axios({
-      method: 'GET',
-      url: this.props.backendURL + 'brochures'
-    })
-    .then((response) => {
-      console.log('response here from GET /brochures')
-      console.log(response.data)
-
-      this.setState({
-        allBrochures: response.data
+    console.log('isAuthenticated brochures CDM', isAuthenticated())
+    if (isAuthenticated()) {
+      axios({
+        method: 'GET',
+        url: `${this.props.backendURL}brochures/${localStorage.KEY_FOR_LOCAL_STORAGE}`
+        // url: this.props.backendURL + 'brochures'
       })
-    })
+      .then((response) => {
+        console.log('componentDidMount response', response.data)
+        this.setState({
+          allBrochures: response.data
+        })
+      })
+      console.log('user logged in')
+    } else {
+      console.log('user not logged in')
+    }
   }
 }
 

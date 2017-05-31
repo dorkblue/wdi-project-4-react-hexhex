@@ -1,7 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 
+import {isAuthenticated, storageKey, storage} from '../../script/firebase'
+
 import DescriptionsMain from './descriptions/DescriptionsMain'
+import BannerMain from './banner/BannerMain'
+import Modal from 'react-modal'
 
 const $ = require('jquery')
 
@@ -16,6 +20,17 @@ function formDataConverter (arr) {
   return newObj
 }
 
+const deleteModalStyle = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
+
 class Brochure extends React.Component {
   constructor(props) {
     super(props)
@@ -23,8 +38,14 @@ class Brochure extends React.Component {
       brochureData: {},
       brochureDescriptions: {},
       brochureDetails: {},
-      editDescriptions: false
+      brochureBanner: {},
+      editDescriptions: false,
+      editBanner: false,
+      deleteModalOpen: false
     }
+
+    this.deleteModalOpen = this.deleteModalOpen.bind(this)
+    this.closeDeleteModal = this.closeDeleteModal.bind(this)
   }
 
   saveDescriptions (e) {
@@ -48,6 +69,33 @@ class Brochure extends React.Component {
     })
   }
 
+  saveBanner (e) {
+    console.log(this.props)
+    let $banner_upload = e.target.files[0]
+
+    const bannerDirectory = storage
+      .ref(`/${this.props.match.params.id}-${this.state.brochureData.banner_key}`)
+      .put($banner_upload)
+      .then((snapshot) => {
+        axios({
+          method: 'PUT',
+          url: `${this.props.backendURL}banner/${this.state.brochureData.banner_key}`,
+          data: {
+            url: snapshot.downloadURL
+          }
+        })
+        .then((response) => {
+          this.setState({
+            brochureBanner: response.data
+          })
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      })
+  }
+
   toggleDescriptionsEdit () {
     const editStatus = !this.state.editDescriptions
     this.setState({
@@ -55,17 +103,41 @@ class Brochure extends React.Component {
     })
   }
 
+  toggleBannerEdit () {
+    const editStatus = !this.state.editBanner
+    this.setState({
+      editBanner: editStatus
+    })
+  }
+
   deleteBrochure () {
     console.log(this)
     axios({
       method: 'DELETE',
-      url: `${this.props.backendURL}brochures/${this.props.match.params.id}`,
+      url: `${this.props.backendURL}brochures/${localStorage.KEY_FOR_LOCAL_STORAGE}/${this.props.match.params.id}`,
       data: this.state.brochureData
     })
     .then((response) => {
       console.log(response.data)
+      // delete image from storage here
+      if (this.state.brochureBanner.url !== '') {
+        const bannerStorage = storage
+        .ref(`/${this.props.match.params.id}-${this.state.brochureData.banner_key}`)
+
+        bannerStorage.delete().catch((err) => {
+          console.log(err)
+        })
+      }
       this.props.history.push('/brochures')
     })
+  }
+
+  deleteModalOpen () {
+    this.setState({deleteModalOpen: true})
+  }
+
+  closeDeleteModal () {
+    this.setState({deleteModalOpen: false})
   }
 
   render() {
@@ -73,15 +145,34 @@ class Brochure extends React.Component {
     const brochureData = this.state.brochureData
     const brochureDescriptions = this.state.brochureDescriptions
     const brochureDetails = this.state.brochureDetails
+    const brochureBanner = this.state.brochureBanner
     return (
       <div>
         <h1>{brochureData.title} </h1>
-        <button onClick={() => this.deleteBrochure()}>Delete Brochure</button>
+        {/* <button onClick={() => this.deleteBrochure()}>Delete Brochure</button> */}
+        <button onClick={this.deleteModalOpen}>Delete Brochure</button>
         <DescriptionsMain
           data={brochureDescriptions}
           edit={this.state.editDescriptions}
           toggleEdit={() => this.toggleDescriptionsEdit()}
           save={(e) => this.saveDescriptions(e)} />
+        {/* <BannerMain saveBanner={this.saveBanner} /> */}
+        <BannerMain
+          saveBanner={(e) => this.saveBanner(e)}
+          data={brochureBanner}
+          toggleEdit={() => this.toggleBannerEdit()}
+          edit={this.state.editBanner} />
+        <Modal
+          isOpen={this.state.deleteModalOpen}
+          // onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeDeleteModal}
+          style={deleteModalStyle}
+          contentLabel='deleteBrochureModal'>
+          <div>
+            <h1>Are you sure?</h1>
+            <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
+          </div>
+        </Modal>
       </div>
     )
   }
@@ -89,21 +180,24 @@ class Brochure extends React.Component {
     const brochureKey = this.props.match.params.id
 
     axios
-    .get(`${this.props.backendURL + 'brochures/' + brochureKey}`)
+    .get(`${this.props.backendURL}brochures/${localStorage.KEY_FOR_LOCAL_STORAGE}/${brochureKey}`)
     .then((response) => {
+      console.log('response', response)
       axios
       .all(
         [
           axios.get(`${this.props.backendURL + 'descriptions/' + response.data.descriptions_key}`),
-          axios.get(`${this.props.backendURL + 'details/' + response.data.details_key}`)
+          axios.get(`${this.props.backendURL + 'details/' + response.data.details_key}`),
+          axios.get(`${this.props.backendURL + 'banner/' + response.data.banner_key}`)
         ]
       )
-      .then(axios.spread((resDescriptions, resDetails) => {
-        console.log('response data', response.data)
+      .then(axios.spread((resDescriptions, resDetails, resBanner) => {
+        console.log('resBanner data', resBanner)
         this.setState({
           brochureData: response.data,
           brochureDescriptions: resDescriptions.data,
-          brochureDetails: resDetails.data
+          brochureDetails: resDetails.data,
+          brochureBanner: resBanner.data
         })
       }))
     })

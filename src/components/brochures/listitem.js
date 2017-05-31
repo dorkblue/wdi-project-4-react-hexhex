@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 class ListItem extends React.Component {
 
   render() {
-    console.log('ListItem', this)
+    console.log('ListItem', this.props)
     return (
       <div>
         <Link to={'/brochures/' + this.props.id}>{this.props.id}</Link>
