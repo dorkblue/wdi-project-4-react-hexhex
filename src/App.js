@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import axios from 'axios'
 
 import './App.css'
+import './Carousel.css'
 import $ from 'jquery'
 import {auth, storageKey, isAuthenticated} from './script/firebase'
 
@@ -26,21 +27,6 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 }
-//
-// const PrivateRoute = ({ component: Component, signinModalOpen, ...rest }) => {
-//   console.log('PRIVATE ROUTE COMPONENT', Component)
-//   console.log('PRIVATE ROUTE REST', rest)
-//   console.log('PRIVATE ROUTE signinModalOpen', signinModalOpen)
-//   if (isAuthenticated()) {
-//     return <Route {...rest} render={(props) => (<Component {...props} {...rest} />)} />
-//   } else {
-//     return signinModalOpen()
-//     // App.setState({
-//     //   signinModalOpen: true
-//     // })
-//     // return null
-//   }
-// }
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -247,7 +233,6 @@ class App extends Component {
             <PrivateRoute exact path='/brochures' component={Brochures} backendURL={backendURL} />
             <PrivateRoute exact path='/profile' component={ProfileMain} backendURL={backendURL} />
             <Route path='/brochures/:id' render={(props) => <Brochure backendURL={backendURL} {...props} />} />
-            {/* <Route exact path='/profile' render={(props) => <ProfileMain backendURL={backendURL} {...props} />} /> */}
           </main>
         </div>
       </BrowserRouter>
