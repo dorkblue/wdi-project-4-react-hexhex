@@ -14,6 +14,12 @@ const userloggedin = () => {
 
 const loggedinState = (props) => {
   return <div>
+    <Link to='/brochures'>
+      All Brochures
+    </Link>{' '}
+    <Link to='/profile'>
+      Profile
+    </Link>
     <button onClick={props.signout}>Sign Out</button>
   </div>
 }
@@ -34,9 +40,6 @@ const NavMain = (props) => {
     authState = notLoggedinState(props)
   }
   return <nav>
-    <Link to='/brochures'>
-      All Brochures
-    </Link>
     {authState}
   </nav>
 }

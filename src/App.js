@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import {BrowserRouter, Link, Route} from 'react-router-dom'
+import {BrowserRouter, Link, Route, Redirect} from 'react-router-dom'
 import Modal from 'react-modal'
+import axios from 'axios'
 
 import './App.css'
 import $ from 'jquery'
-import {auth, storageKey} from './script/firebase'
+import {auth, storageKey, isAuthenticated} from './script/firebase'
 
 import NavMain from './components/nav/NavMain'
 import Brochures from './components/brochures/main'
 import Brochure from './components/brochure/main'
+import ProfileMain from './components/profile/ProfileMain'
+import HomeMain from './components/home/HomeMain'
 
 const backendURL = 'http://localhost:7777/'
 const appElement = $('#root')
@@ -23,11 +26,40 @@ const customStyles = {
     transform: 'translate(-50%, -50%)'
   }
 }
+//
+// const PrivateRoute = ({ component: Component, signinModalOpen, ...rest }) => {
+//   console.log('PRIVATE ROUTE COMPONENT', Component)
+//   console.log('PRIVATE ROUTE REST', rest)
+//   console.log('PRIVATE ROUTE signinModalOpen', signinModalOpen)
+//   if (isAuthenticated()) {
+//     return <Route {...rest} render={(props) => (<Component {...props} {...rest} />)} />
+//   } else {
+//     return signinModalOpen()
+//     // App.setState({
+//     //   signinModalOpen: true
+//     // })
+//     // return null
+//   }
+// }
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    isAuthenticated() ? (
+      <Component {...props} {...rest} />
+    ) : (
+      <Redirect to={{
+        pathname: '/',
+        state: { from: props.location }
+      }} />
+    )
+  )} />
+)
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      backendURL: backendURL,
       currentUser: null,
       signinModalOpen: false,
       registerModalOpen: false
@@ -88,9 +120,9 @@ class App extends Component {
     e.preventDefault()
     auth.signOut().then(function () {
       console.log('signed out success')
+      console.log(window.history)
+      window.location = '/'
     })
-
-    window.location = '/'
   }
 
   getUser (e) {
@@ -98,11 +130,11 @@ class App extends Component {
 
     const user = auth.currentUser
     console.log('getuser', user)
+    console.log('getuser localstorage', localStorage)
   }
 
   register (e) {
     e.preventDefault()
-
     const $email = $('#email').val()
     const $password = $('#password').val()
 
@@ -110,7 +142,20 @@ class App extends Component {
 
     auth.createUserWithEmailAndPassword($email, $password)
       .then((user) => {
-        window.location = '/'
+        axios({
+          method: 'POST',
+          url: `${this.state.backendURL}users`,
+          data: {
+            user: user
+          }
+        })
+        .then((response) => {
+          console.log(response)
+          window.location = '/profile'
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       })
       .catch((err) => {
         console.log('error', err)
@@ -170,6 +215,7 @@ class App extends Component {
 
   render () {
     console.log('rendering at APP')
+    console.log(this.state.signinModalOpen)
     return (
       <BrowserRouter>
         <div>
@@ -197,9 +243,11 @@ class App extends Component {
               {this.registerModal()}
             </Modal>
 
-            <Route exact path='/' />
-            <Route exact path='/brochures' render={(props) => <Brochures backendURL={backendURL} currentUser={this.state.currentUser} {...props} />} />
-            <Route path='/brochures/:id' render={(props) => <Brochure backendURL={backendURL} currentUser={this.state.currentUser} {...props} />} />
+            <Route exact path='/' render={(props) => <HomeMain registerModalOpen={this.registerModalOpen} signinModalOpen={this.signinModalOpen} {...props} />} />
+            <PrivateRoute exact path='/brochures' component={Brochures} backendURL={backendURL} />
+            <PrivateRoute exact path='/profile' component={ProfileMain} backendURL={backendURL} />
+            <Route path='/brochures/:id' render={(props) => <Brochure backendURL={backendURL} {...props} />} />
+            {/* <Route exact path='/profile' render={(props) => <ProfileMain backendURL={backendURL} {...props} />} /> */}
           </main>
         </div>
       </BrowserRouter>

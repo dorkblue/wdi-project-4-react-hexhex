@@ -4,11 +4,7 @@ import $ from 'jquery'
 
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
-// import firebase from '../../script/firebase'
-
 import ListItem from './ListItem'
-
-// const auth = firebase.auth()
 
 class Brochures extends React.Component {
   constructor (props) {

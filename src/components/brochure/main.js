@@ -74,26 +74,26 @@ class Brochure extends React.Component {
     let $banner_upload = e.target.files[0]
 
     const bannerDirectory = storage
-                            .ref(`/${this.props.match.params.id}-${this.state.brochureData.banner_key}`)
-                            .put($banner_upload)
-                            .then((snapshot) => {
-                              axios({
-                                method: 'PUT',
-                                url: `${this.props.backendURL}banner/${this.state.brochureData.banner_key}`,
-                                data: {
-                                  url: snapshot.downloadURL
-                                }
-                              })
-                              .then((response) => {
-                                this.setState({
-                                  brochureBanner: response.data
-                                })
-                                console.log(response)
-                              })
-                              .catch((err) => {
-                                console.log(err)
-                              })
-                            })
+      .ref(`/${this.props.match.params.id}-${this.state.brochureData.banner_key}`)
+      .put($banner_upload)
+      .then((snapshot) => {
+        axios({
+          method: 'PUT',
+          url: `${this.props.backendURL}banner/${this.state.brochureData.banner_key}`,
+          data: {
+            url: snapshot.downloadURL
+          }
+        })
+        .then((response) => {
+          this.setState({
+            brochureBanner: response.data
+          })
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      })
   }
 
   toggleDescriptionsEdit () {
@@ -123,7 +123,7 @@ class Brochure extends React.Component {
       if (this.state.brochureBanner.url !== '') {
         const bannerStorage = storage
         .ref(`/${this.props.match.params.id}-${this.state.brochureData.banner_key}`)
-        
+
         bannerStorage.delete().catch((err) => {
           console.log(err)
         })
