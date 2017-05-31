@@ -1,8 +1,15 @@
 div#root {
   width: 80%;
   margin: 0 auto;
+  background-color: rgb(188, 249, 215);
+  padding: 10px;
 }
 
-div#banner_image img{
-  height: 200px;
+div#banner_image {
+  height: 250px;
+}
+
+div#banner_image img {
+  height: 100%;
+  object-fit: cover;
 }

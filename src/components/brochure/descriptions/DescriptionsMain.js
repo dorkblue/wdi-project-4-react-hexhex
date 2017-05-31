@@ -2,7 +2,7 @@ import React from 'react'
 
 const editState = (props) => {
   console.log('editstate props', props)
-  return <div>
+  return <div style={{width: '45%'}}>
     <h4>
       Description Edit Mode
     </h4>

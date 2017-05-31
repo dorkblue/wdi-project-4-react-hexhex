@@ -152,20 +152,26 @@ class Brochure extends React.Component {
         <h1>{brochureData.title} </h1>
         {/* <button onClick={() => this.deleteBrochure()}>Delete Brochure</button> */}
         <button onClick={this.deleteModalOpen}>Delete Brochure</button>
-        <DescriptionsMain
-          data={brochureDescriptions}
-          edit={this.state.editDescriptions}
-          toggleEdit={() => this.toggleDescriptionsEdit()}
-          save={(e) => this.saveDescriptions(e)} />
-        {/* <BannerMain saveBanner={this.saveBanner} /> */}
+
         <BannerMain
           saveBanner={(e) => this.saveBanner(e)}
           data={brochureBanner}
           toggleEdit={() => this.toggleBannerEdit()}
           edit={this.state.editBanner} />
-        <div style={{height: '200px'}}>
-        </div>
-        <Carousell />
+          <div
+            style={
+              {width: '100%',
+              display: 'flex',
+
+            }
+          }>
+            <Carousell />
+            <DescriptionsMain
+              data={brochureDescriptions}
+              edit={this.state.editDescriptions}
+              toggleEdit={() => this.toggleDescriptionsEdit()}
+              save={(e) => this.saveDescriptions(e)} />
+          </div>
         <Modal
           isOpen={this.state.deleteModalOpen}
           // onAfterOpen={this.afterOpenModal}

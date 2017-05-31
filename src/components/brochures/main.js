@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
-import {Item} from 'semantic-ui-react'
+import {Item, Divider, Button, Input} from 'semantic-ui-react'
 
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
@@ -51,12 +51,14 @@ class Brochures extends React.Component {
     return (
       <div>
         <div>
-          <h1>Create New</h1>
-          <input type='text' placeholder='Title of Brochure' id='newBrochureTitle' />
-          <button onClick={() => this.create()}>Make New</button>
+          <Input fluid type='text' id='newBrochureTitle' placeholder='Claymore Hill.. 3 Bedroom Unit..' action>
+            <input />
+            <Button color='teal' onClick={() => this.create()}>New Brochure</Button>
+          </Input>
         </div>
+        <Divider />
         <div>
-          <Item.Group link>
+          <Item.Group divided>
             {ListItems}
           </Item.Group>
         </div>

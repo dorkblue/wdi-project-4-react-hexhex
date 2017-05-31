@@ -5,6 +5,8 @@ import axios from 'axios'
 
 import './App.css'
 import './Carousel.css'
+import 'semantic-ui-css/semantic.min.css'
+
 import $ from 'jquery'
 import {auth, storageKey, isAuthenticated} from './script/firebase'
 
