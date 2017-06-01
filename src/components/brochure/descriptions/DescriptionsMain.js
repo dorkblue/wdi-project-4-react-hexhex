@@ -1,4 +1,5 @@
 import React from 'react'
+import {Image, Divider, Button} from 'semantic-ui-react'
 
 const editState = (props) => {
   console.log('editstate props', props)
@@ -19,10 +20,9 @@ const editState = (props) => {
 
 const viewState = (props) => {
   return <div>
-    <h4>
-      Description View Mode
-    </h4>
-
+    <h2>
+      Blurb
+    </h2>
     <p>
       {props.data.content}
     </p>
@@ -32,12 +32,16 @@ const viewState = (props) => {
 
 const toggleEditButton = (ToF, toggleEdit) => {
   const button = ToF ? 'Back' : 'Edit'
+  const buttonIcon = ToF ? 'chevron left' : 'wizard'
 
-  return <button onClick={() => toggleEdit()}>{button}</button>
+  return (
+    <div className='config-options'>
+      <Button circular icon={buttonIcon} onClick={() => toggleEdit()} />
+    </div>
+  )
 }
 
 const DescriptionsMain = (props) => {
-  console.log('descriptions props', props)
   if (props.edit) {
     return editState(props)
   } else {

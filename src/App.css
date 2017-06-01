@@ -1,8 +1,19 @@
 div#root {
   width: 80%;
   margin: 0 auto;
-  background-color: rgb(188, 249, 215);
+  /*background-color: rgb(188, 249, 215);*/
   padding: 10px;
+}
+
+div.config-options {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+/* BANNER */
+div#banner-container {
+  position: relative;
 }
 
 div#banner_image {
@@ -12,4 +23,28 @@ div#banner_image {
 div#banner_image img {
   height: 100%;
   object-fit: cover;
+}
+
+/* CAROUSEL */
+button.slick-arrow {
+  filter: invert(100%)
+}
+
+div#carousell-box {
+  padding: 5px 40px 40px 40px;
+}
+
+/* DESCRIPTIONS-DETAILS */
+div#descriptions-details-container {
+  display: flex;
+}
+
+div#descriptions-container {
+  width: 40%;
+  position: relative;
+  margin: 5px 0 5px 5px;
+}
+
+div#details-container {
+  width: 60%;
 }

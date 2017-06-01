@@ -7,6 +7,7 @@ import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import Carousell from './carousel/CarouselMain'
+import {Header, Icon, Dropdown, Segment} from 'semantic-ui-react'
 
 const $ = require('jquery')
 
@@ -148,30 +149,42 @@ class Brochure extends React.Component {
     const brochureDetails = this.state.brochureDetails
     const brochureBanner = this.state.brochureBanner
     return (
-      <div>
-        <h1>{brochureData.title} </h1>
-        {/* <button onClick={() => this.deleteBrochure()}>Delete Brochure</button> */}
-        <button onClick={this.deleteModalOpen}>Delete Brochure</button>
-
-        <BannerMain
-          saveBanner={(e) => this.saveBanner(e)}
-          data={brochureBanner}
-          toggleEdit={() => this.toggleBannerEdit()}
-          edit={this.state.editBanner} />
-          <div
-            style={
-              {width: '100%',
-              display: 'flex',
-
-            }
-          }>
-            <Carousell />
+      <Segment>
+        <Header as='h2'>
+          <Icon name='edit' />
+          <Header.Content>
+            <Dropdown text={brochureData.title}>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Header.Subheader>
+              Edit & publish your brochure
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+        <div id='banner-container'>
+          <BannerMain
+            saveBanner={(e) => this.saveBanner(e)}
+            data={brochureBanner}
+            toggleEdit={() => this.toggleBannerEdit()}
+            edit={this.state.editBanner} />
+        </div>
+        <div id='descriptions-details-container'>
+          <div id='details-container'>
+            <h1>Details Should Be Here</h1>
+          </div>
+          <div id='descriptions-container'>
             <DescriptionsMain
               data={brochureDescriptions}
               edit={this.state.editDescriptions}
               toggleEdit={() => this.toggleDescriptionsEdit()}
               save={(e) => this.saveDescriptions(e)} />
           </div>
+        </div>
+        <Carousell />
+
         <Modal
           isOpen={this.state.deleteModalOpen}
           // onAfterOpen={this.afterOpenModal}
@@ -183,7 +196,7 @@ class Brochure extends React.Component {
             <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
           </div>
         </Modal>
-      </div>
+      </Segment>
     )
   }
   componentDidMount () {

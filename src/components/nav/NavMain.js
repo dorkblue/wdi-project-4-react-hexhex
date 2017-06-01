@@ -2,33 +2,24 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
-const userloggedin = () => {
-  console.log('in userloggedin')
-  console.log(localStorage)
-  if (localStorage && localStorage[storageKey] !== '') {
-    return true
-  } else {
-    return false
-  }
-}
+import {Button, Divider} from 'semantic-ui-react'
 
 const loggedinState = (props) => {
   return <div>
     <Link to='/brochures'>
-      All Brochures
+      <Button color='blue' floated='left'>Brochures</Button>
     </Link>{' '}
     <Link to='/profile'>
-      Profile
+      <Button color='blue' floated='left'>Profile</Button>
     </Link>
-    <button onClick={props.signout}>Sign Out</button>
+    <Button inverted color='red' onClick={props.signout} floated='right'>Sign Out</Button>
   </div>
 }
 
 const notLoggedinState = (props) => {
   return <div>
-    <button onClick={props.signinModalOpen}>Sign In</button>
-    {'/'}
-    <button onClick={props.registerModalOpen}>Register</button>
+    <Button onClick={props.signinModalOpen} floated='right'>Sign In</Button>
+    <Button onClick={props.registerModalOpen} floated='right'>Register</Button>
   </div>
 }
 
@@ -39,9 +30,9 @@ const NavMain = (props) => {
   } else {
     authState = notLoggedinState(props)
   }
-  return <nav>
+  return <div>
     {authState}
-  </nav>
+  </div>
 }
 
 export default NavMain
