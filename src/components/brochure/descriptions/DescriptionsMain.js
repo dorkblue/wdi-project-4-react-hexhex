@@ -1,43 +1,45 @@
 import React from 'react'
-import {Image, Divider, Button} from 'semantic-ui-react'
+import {Image, Divider, Button, Header, Container, Form, TextArea} from 'semantic-ui-react'
 
 const editState = (props) => {
   console.log('editstate props', props)
-  return <div style={{width: '45%'}}>
-    <h4>
-      Description Edit Mode
-    </h4>
-    <form id='description-form'>
-      <label>Description:
-        <textarea id='description' name='content' placeholder='Description here' defaultValue={props.data.content}></textarea>
-      </label>
-      <button onClick={(e) => props.save(e)}>Save</button>
-    </form>
+  return <Container>
+    <Header as='h2' icon='heart' content='Blurb' />
+    <Form id='description-form'>
+      <TextArea autoHeight id='description' name='content' placeholder='Description here' defaultValue={props.data.content} />
+    </Form>
 
-    {toggleEditButton(true, props.toggleEdit)}
-  </div>
+    <div className='config-options'>
+      <Button.Group>
+        <Button positive icon='save' onClick={(e) => props.save(e)} />
+        <Button.Or />
+        {toggleEditButton(true, props.toggleEdit)}
+      </Button.Group>
+    </div>
+  </Container>
 }
 
 const viewState = (props) => {
-  return <div>
-    <h2>
-      Blurb
-    </h2>
-    <p>
-      {props.data.content}
-    </p>
-    {toggleEditButton(false, props.toggleEdit)}
-  </div>
+  return (
+    <Container>
+      <Header as='h2' icon='heart' content='Blurb' />
+      <p>
+        {props.data.content}
+      </p>
+
+      <div className='config-options'>
+        {toggleEditButton(false, props.toggleEdit)}
+      </div>
+    </Container>
+  )
 }
 
 const toggleEditButton = (ToF, toggleEdit) => {
   const button = ToF ? 'Back' : 'Edit'
-  const buttonIcon = ToF ? 'chevron left' : 'wizard'
+  const buttonIcon = ToF ? 'remove' : 'wizard'
 
   return (
-    <div className='config-options'>
-      <Button circular icon={buttonIcon} onClick={() => toggleEdit()} />
-    </div>
+    <Button icon={buttonIcon} onClick={() => toggleEdit()} />
   )
 }
 

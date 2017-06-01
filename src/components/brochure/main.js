@@ -7,7 +7,9 @@ import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import Carousell from './carousel/CarouselMain'
-import {Header, Icon, Dropdown, Segment} from 'semantic-ui-react'
+import {Header, Icon, Dropdown, Segment, Divider, Button} from 'semantic-ui-react'
+
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 const $ = require('jquery')
 
@@ -150,20 +152,31 @@ class Brochure extends React.Component {
     const brochureBanner = this.state.brochureBanner
     return (
       <Segment>
-        <Header as='h2'>
-          <Icon name='edit' />
-          <Header.Content>
-            <Dropdown text={brochureData.title}>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Header.Subheader>
-              Edit & publish your brochure
-            </Header.Subheader>
-          </Header.Content>
-        </Header>
+        <div id='brochure-header-container'>
+          <div id='brochure-header-title'>
+            <Header as='h2'>
+              <Icon name='edit' />
+              <Header.Content>
+                <Dropdown text={brochureData.title}>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Header.Subheader>
+                  Edit & publish your brochure
+                </Header.Subheader>
+              </Header.Content>
+            </Header>
+          </div>
+          <div id='brochure-header-clipboard'>
+            <CopyToClipboard text='LOUISA IS HERE'>
+              <Button icon='linkify' floated='right' />
+            </CopyToClipboard>
+          </div>
+        </div>
+        <Divider clearing />
+
         <div id='banner-container'>
           <BannerMain
             saveBanner={(e) => this.saveBanner(e)}
