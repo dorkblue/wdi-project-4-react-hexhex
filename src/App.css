@@ -11,9 +11,11 @@ div.config-options {
   right: 5px;
 }
 
-/* BANNER */
+/* BROCHURE-BANNER */
 div#banner-container {
   position: relative;
+  margin-left: -14px;
+  margin-right: -14px;
 }
 
 div#banner_image {
@@ -25,7 +27,7 @@ div#banner_image img {
   object-fit: cover;
 }
 
-/* CAROUSEL */
+/* BROCHURE-CAROUSEL */
 button.slick-arrow {
   filter: invert(100%)
 }
@@ -34,7 +36,7 @@ div#carousell-box {
   padding: 5px 40px 40px 40px;
 }
 
-/* DESCRIPTIONS-DETAILS */
+/* BROCHURE-DESCRIPTIONS-DETAILS */
 div#descriptions-details-container {
   display: flex;
 }
@@ -42,11 +44,29 @@ div#descriptions-details-container {
 div#descriptions-container {
   width: 40%;
   position: relative;
-  margin: 5px 0 5px 5px;
+  margin: 20px 0 20px 5px;
 }
+
+/* BROCHURE-HEADER */
+div#brochure-header-container {
+   display: flex;
+   justify-content: space-between;
+}
+
+div#brochure-header-title {
+}
+
+div#brochure-header-clipboard {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
 
 div#details-container {
   width: 60%;
+  margin: 20px 0 20px 0px;
 }
 
 div#info-content {

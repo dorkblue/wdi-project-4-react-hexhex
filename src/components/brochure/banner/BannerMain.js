@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, Divider, Button} from 'semantic-ui-react'
+import {Image, Divider, Button, Input} from 'semantic-ui-react'
 
 const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/project-hex-hex.appspot.com/o/Alfons.png?alt=media&token=c897dfd1-882b-4792-9d7a-beb6227c1554'
 
@@ -17,17 +17,13 @@ const returnImage = (props) => {
 
 const editState = (props) => {
   return <div>
-    <h4>
-      Banner Edit Mode
-    </h4>
     <div id='banner_image'>
-      <img src={returnImage(props)} />
+      <Image src={returnImage(props)} fluid />
     </div>
-    <label>
-      <input type='file' id='banner_upload' onChange={(e) => props.saveBanner(e)} />
-    </label>
 
-    {toggleEditButton(true, props.toggleEdit)}
+    <div className='config-options'>
+      <Input action={toggleEditButton(true, props.toggleEdit)} type='file' id='banner_upload' onChange={(e) => props.saveBanner(e)} />
+    </div>
   </div>
 }
 
@@ -37,19 +33,20 @@ const viewState = (props) => {
       <Image src={returnImage(props)} fluid />
       {/* <img src={returnImage(props)} /> */}
     </div>
+
+    <div className='config-options'>
       {toggleEditButton(false, props.toggleEdit)}
     </div>
+  </div>
 
 }
 
 const toggleEditButton = (ToF, toggleEdit) => {
   const button = ToF ? 'Back' : 'Edit'
-  const buttonIcon = ToF ? 'chevron left' : 'wizard'
+  const buttonIcon = ToF ? 'remove' : 'wizard'
 
   return (
-    <div className='config-options'>
-      <Button circular icon={buttonIcon} onClick={() => toggleEdit()} />
-    </div>
+      <Button icon={buttonIcon} onClick={() => toggleEdit()} />
   )
 }
 
