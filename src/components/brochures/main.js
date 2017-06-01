@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
-import {Item} from 'semantic-ui-react'
+import {Item, Divider, Button, Input, Header, Icon, Segment} from 'semantic-ui-react'
 
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
@@ -50,16 +50,25 @@ class Brochures extends React.Component {
     }
     return (
       <div>
-        <div>
-          <h1>Create New</h1>
-          <input type='text' placeholder='Title of Brochure' id='newBrochureTitle' />
-          <button onClick={() => this.create()}>Make New</button>
-        </div>
-        <div>
-          <Item.Group link>
+        <Header as='h2'>
+          <Icon name='folder' />
+          <Header.Content>
+            Brochures
+            <Header.Subheader>
+              View all & create your brochure here
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+        <Segment>
+          <Input fluid type='text' id='newBrochureTitle' placeholder='Claymore Hill.. 3 Bedroom Unit..' action>
+            <input />
+            <Button color='teal' onClick={() => this.create()}>New Brochure</Button>
+          </Input>
+        <Divider />
+          <Item.Group divided>
             {ListItems}
           </Item.Group>
-        </div>
+        </Segment>
       </div>
     )
   }

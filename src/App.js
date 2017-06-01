@@ -1,10 +1,14 @@
+import './App.css'
+import './Carousel.css'
+import 'semantic-ui-css/semantic.min.css'
+
 import React, { Component } from 'react'
 import {BrowserRouter, Link, Route, Redirect} from 'react-router-dom'
 import Modal from 'react-modal'
 import axios from 'axios'
+import {Divider} from 'semantic-ui-react'
 
-import './App.css'
-import './Carousel.css'
+
 import $ from 'jquery'
 import {auth, storageKey, isAuthenticated} from './script/firebase'
 
@@ -210,8 +214,9 @@ class App extends Component {
             registerModalOpen={this.registerModalOpen}
             signout={this.signout}
           />
+          <Divider hidden clearing />
           <main>
-            <button onClick={(e) => this.getUser(e)}>Get User</button>
+            {/* <button onClick={(e) => this.getUser(e)}>Get User</button> */}
             {/* Sign in Modal Box */}
             <Modal
               isOpen={this.state.signinModalOpen}
