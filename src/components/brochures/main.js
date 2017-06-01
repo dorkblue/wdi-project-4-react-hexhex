@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import $ from 'jquery'
+import {Item} from 'semantic-ui-react'
 
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
@@ -45,7 +46,7 @@ class Brochures extends React.Component {
     for (var key in allBrochures) {
       console.log(key)
       console.log(allBrochures[key])
-      ListItems.push(<ListItem key={key} id={key} />)
+      ListItems.push(<ListItem key={key} id={key} backendURL={this.props.backendURL} data={allBrochures[key]} />)
     }
     return (
       <div>
@@ -55,8 +56,9 @@ class Brochures extends React.Component {
           <button onClick={() => this.create()}>Make New</button>
         </div>
         <div>
-          <h1>All Brochures List</h1>
-          {ListItems}
+          <Item.Group link>
+            {ListItems}
+          </Item.Group>
         </div>
       </div>
     )

@@ -7,6 +7,7 @@ import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import DetailsMain from './details/DetailsMain'
+import Carousell from './carousel/CarouselMain'
 
 const $ = require('jquery')
 
@@ -33,7 +34,7 @@ const deleteModalStyle = {
 }
 
 class Brochure extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       brochureData: {},
@@ -170,7 +171,7 @@ class Brochure extends React.Component {
     this.setState({deleteModalOpen: false})
   }
 
-  render() {
+  render () {
     console.log('this.props', this.props)
     const brochureData = this.state.brochureData
     const brochureDescriptions = this.state.brochureDescriptions
@@ -192,6 +193,9 @@ class Brochure extends React.Component {
           data={brochureBanner}
           toggleEdit={() => this.toggleBannerEdit()}
           edit={this.state.editBanner} />
+        <div style={{height: '200px'}}>
+        </div>
+        <Carousell />
         <Modal
           isOpen={this.state.deleteModalOpen}
           // onAfterOpen={this.afterOpenModal}
