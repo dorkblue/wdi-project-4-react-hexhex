@@ -238,6 +238,7 @@ class App extends Component {
             <PrivateRoute exact path='/brochures' component={Brochures} backendURL={backendURL} />
             <PrivateRoute exact path='/profile' component={ProfileMain} backendURL={backendURL} />
             <Route path='/brochures/:id' render={(props) => <Brochure backendURL={backendURL} {...props} />} />
+            <Route path='/showcases/:id' render={(props) => <Brochure backendURL={backendURL} {...props} />} />
           </main>
         </div>
       </BrowserRouter>

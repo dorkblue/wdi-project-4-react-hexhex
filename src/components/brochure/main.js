@@ -7,7 +7,7 @@ import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import Carousell from './carousel/CarouselMain'
-import {Header, Icon, Dropdown, Segment, Divider, Button} from 'semantic-ui-react'
+import {Header, Icon, Dropdown, Segment, Divider, Button, Input} from 'semantic-ui-react'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 
@@ -151,65 +151,71 @@ class Brochure extends React.Component {
     const brochureDetails = this.state.brochureDetails
     const brochureBanner = this.state.brochureBanner
     return (
-      <Segment>
-        <div id='brochure-header-container'>
-          <div id='brochure-header-title'>
-            <Header as='h2'>
-              <Icon name='edit' />
-              <Header.Content>
-                <Dropdown text={brochureData.title}>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Header.Subheader>
-                  Edit & publish your brochure
-                </Header.Subheader>
-              </Header.Content>
-            </Header>
+      <Segment.Group>
+        <Segment>
+          <div id='brochure-header-container'>
+            <div id='brochure-header-title'>
+              <Header as='h2'>
+                <Icon name='edit' />
+                <Header.Content>
+                  <Dropdown text={brochureData.title}>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <Header.Subheader>
+                    Edit & publish your brochure
+                  </Header.Subheader>
+                </Header.Content>
+              </Header>
+            </div>
+            <div id='brochure-header-clipboard'>
+              <CopyToClipboard text='LINK HERE'>
+                <div>
+                  <Input action={{color: 'teal', labelPosition: 'left', icon: 'linkify', content: 'Copy Link'}} actionPosition='left' defaultValue='LINK HERE'></Input>
+                </div>
+              </CopyToClipboard>
+            </div>
           </div>
-          <div id='brochure-header-clipboard'>
-            <CopyToClipboard text='LOUISA IS HERE'>
-              <Button icon='linkify' floated='right' />
-            </CopyToClipboard>
-          </div>
-        </div>
-        <Divider clearing />
+          <Divider clearing />
 
-        <div id='banner-container'>
-          <BannerMain
-            saveBanner={(e) => this.saveBanner(e)}
-            data={brochureBanner}
-            toggleEdit={() => this.toggleBannerEdit()}
-            edit={this.state.editBanner} />
-        </div>
-        <div id='descriptions-details-container'>
-          <div id='details-container'>
-            <h1>Details Should Be Here</h1>
+          <div id='banner-container'>
+            <BannerMain
+              saveBanner={(e) => this.saveBanner(e)}
+              data={brochureBanner}
+              toggleEdit={() => this.toggleBannerEdit()}
+              edit={this.state.editBanner} />
           </div>
-          <div id='descriptions-container'>
-            <DescriptionsMain
-              data={brochureDescriptions}
-              edit={this.state.editDescriptions}
-              toggleEdit={() => this.toggleDescriptionsEdit()}
-              save={(e) => this.saveDescriptions(e)} />
+          <div id='descriptions-details-container'>
+            <div id='details-container'>
+              <h1>Details Should Be Here</h1>
+            </div>
+            <div id='descriptions-container'>
+              <DescriptionsMain
+                data={brochureDescriptions}
+                edit={this.state.editDescriptions}
+                toggleEdit={() => this.toggleDescriptionsEdit()}
+                save={(e) => this.saveDescriptions(e)} />
+            </div>
           </div>
-        </div>
-        <Carousell />
+          <Carousell />
+          <Modal
+            isOpen={this.state.deleteModalOpen}
+            // onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeDeleteModal}
+            style={deleteModalStyle}
+            contentLabel='deleteBrochureModal'>
+            <div>
+              <h1>Are you sure?</h1>
+              <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
+            </div>
+          </Modal>
+        </Segment>
+        <Segment inverted>
 
-        <Modal
-          isOpen={this.state.deleteModalOpen}
-          // onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeDeleteModal}
-          style={deleteModalStyle}
-          contentLabel='deleteBrochureModal'>
-          <div>
-            <h1>Are you sure?</h1>
-            <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
-          </div>
-        </Modal>
-      </Segment>
+        </Segment>
+      </Segment.Group>
     )
   }
   componentDidMount () {

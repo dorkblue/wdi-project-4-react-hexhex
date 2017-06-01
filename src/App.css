@@ -7,8 +7,8 @@ div#root {
 
 div.config-options {
   position: absolute;
-  /*top: 5px;
-  right: 5px;*/
+  top: 5px;
+  right: 5px;
 }
 
 /* BROCHURE-BANNER */
@@ -50,14 +50,15 @@ div#descriptions-container {
 /* BROCHURE-HEADER */
 div#brochure-header-container {
    display: flex;
+   justify-content: space-between;
 }
 
 div#brochure-header-title {
-  width: 90%;
 }
 
 div#brochure-header-clipboard {
-  width: 10%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 
