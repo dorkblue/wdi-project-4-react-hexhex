@@ -50,7 +50,7 @@ div#details-container {
 }
 
 div#info-content {
-  font-size: 2px;
+  font-size: 10px;
 }
 
 div#map-listing {
@@ -73,7 +73,7 @@ div#map-listing {
 }
 
 #locationField {
-  position: absolute;
+  margin-bottom: 20px;
   width: 60vw;
   height: 25px;
   z-index: 5;

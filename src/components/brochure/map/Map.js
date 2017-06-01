@@ -255,6 +255,7 @@ class Map extends React.Component {
             </table>
           </div>
         </div>
+
         <div id='map-listing'>
           <div ref='map' style={mapStyle}></div>
 
