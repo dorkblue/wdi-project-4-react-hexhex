@@ -6,6 +6,7 @@ import {isAuthenticated, storageKey, storage} from '../../script/firebase'
 import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
+import DetailsMain from './details/DetailsMain'
 
 const $ = require('jquery')
 
@@ -41,6 +42,7 @@ class Brochure extends React.Component {
       brochureBanner: {},
       editDescriptions: false,
       editBanner: false,
+      editDetails: false,
       deleteModalOpen: false
     }
 
@@ -96,6 +98,27 @@ class Brochure extends React.Component {
       })
   }
 
+  saveDetails (e) {
+    e.preventDefault()
+    const detailsKey = this.state.brochureData.details_key
+
+    const $formDetails = $('#details-form').serializeArray()
+    const convertedForm = formDataConverter($formDetails)
+    console.log('converted form', convertedForm)
+
+    axios({
+      method: 'PUT',
+      url: `${this.props.backendURL + 'details/' + detailsKey}`,
+      data: convertedForm
+    })
+    .then((response) => {
+      this.setState({
+        brochureDetails: response.data,
+        editDetails: false
+      })
+    })
+  }
+
   toggleDescriptionsEdit () {
     const editStatus = !this.state.editDescriptions
     this.setState({
@@ -107,6 +130,13 @@ class Brochure extends React.Component {
     const editStatus = !this.state.editBanner
     this.setState({
       editBanner: editStatus
+    })
+  }
+
+  toggleDetailsEdit () {
+    const editStatus = !this.state.editDetails
+    this.setState({
+      editDetails: editStatus
     })
   }
 
@@ -173,6 +203,11 @@ class Brochure extends React.Component {
             <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
           </div>
         </Modal>
+        <DetailsMain
+          data={brochureDetails}
+          edit={this.state.editDetails}
+          toggleEdit={() => this.toggleDetailsEdit()}
+          save={(e) => this.saveDetails(e)} />
       </div>
     )
   }

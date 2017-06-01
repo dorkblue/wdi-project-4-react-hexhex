@@ -1,3 +1,90 @@
 div#banner_image img{
   height: 200px;
 }
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#listing {
+  position: absolute;
+  width: 300px;
+  height: 350px;
+  overflow: auto;
+  left: 400px;
+  top: 260px;
+  cursor: pointer;
+  overflow-x: hidden;
+}
+#findschools {
+  position: absolute;
+  text-align: right;
+  width: 100px;
+  font-size: 14px;
+  padding: 4px;
+  z-index: 5;
+  background-color: #fff;
+}
+#locationField {
+  position: absolute;
+  width: 190px;
+  height: 25px;
+  left: 108px;
+  top: 170px;
+  z-index: 5;
+  background-color: #fff;
+}
+#controls {
+  position: absolute;
+  left: 300px;
+  width: 140px;
+  top: 0px;
+  z-index: 5;
+  background-color: #fff;
+}
+#autocomplete {
+  width: 100%;
+}
+#country {
+  width: 100%;
+}
+.placeIcon {
+  width: 20px;
+  height: 34px;
+  margin: 4px;
+}
+.schoolIcon {
+  width: 24px;
+  height: 24px;
+}
+#resultsTable {
+  border-collapse: collapse;
+  width: 200px;
+}
+#rating {
+  font-size: 13px;
+  font-family: Arial Unicode MS;
+}
+.iw_table_row {
+  height: 18px;
+}
+.iw_attribute_name {
+  font-weight: bold;
+  text-align: right;
+}
+.iw_table_icon {
+  text-align: right;
+}
+
+input {
+  width: 60%;
+  padding: 5px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input:focus {
+   border: 1px solid #555;
+}

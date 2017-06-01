@@ -4,6 +4,7 @@ import axios from 'axios'
 import EditState from './EditState'
 import ViewState from './ViewState'
 import $ from 'jquery'
+import Map from '../map/Map'
 
 function formDataConverter (arr) {
   const newObj = {}
@@ -178,6 +179,7 @@ class ProfileMain extends React.Component {
         <div>
           <h1>My Profile Page</h1>
           <h4>Set up namecard here</h4>
+          <Map />
           <EditState
             data={this.state.userData}
             saveLogo={this.saveLogo}
@@ -191,6 +193,7 @@ class ProfileMain extends React.Component {
         <div>
           <h1>My Profile Page</h1>
           <h4>Set up namecard here</h4>
+          <Map />
           <ViewState data={this.state.userData} />
           <button onClick={this.toggleEdit}>Edit</button>
           <button onClick={this.deleteAcc}>Delete Account</button>

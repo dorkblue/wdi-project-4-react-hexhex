@@ -4,7 +4,6 @@ const defaultLogo = 'https://firebasestorage.googleapis.com/v0/b/project-hex-hex
 const defaultProfile = 'https://firebasestorage.googleapis.com/v0/b/project-hex-hex.appspot.com/o/Veronica.png?alt=media&token=1225b650-745f-4735-8317-32a387e6d5c5'
 
 const ViewState = (props) => {
-  console.log('view state', props)
   let logo = props.data.logoURL !== '' ? props.data.logoURL : defaultLogo
   let profile = props.data.profileURL !== '' ? props.data.profileURL : defaultProfile
   return <div>
