@@ -230,7 +230,7 @@ function buildIWContent(place) {
       <div>
 
         <div id="findschools">
-          Find schools near:
+          Name of Property:
         </div>
 
         <div id="locationField">

@@ -8,6 +8,7 @@ import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import DetailsMain from './details/DetailsMain'
 import Carousell from './carousel/CarouselMain'
+import Map from './map/Map'
 
 const $ = require('jquery')
 
@@ -212,6 +213,7 @@ class Brochure extends React.Component {
           edit={this.state.editDetails}
           toggleEdit={() => this.toggleDetailsEdit()}
           save={(e) => this.saveDetails(e)} />
+        <Map />
       </div>
     )
   }

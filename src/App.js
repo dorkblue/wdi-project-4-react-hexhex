@@ -13,7 +13,6 @@ import Brochures from './components/brochures/main'
 import Brochure from './components/brochure/main'
 import ProfileMain from './components/profile/ProfileMain'
 import HomeMain from './components/home/HomeMain'
-import Map from './components/map/Map'
 
 const backendURL = 'http://localhost:7777/'
 const appElement = $('#root')

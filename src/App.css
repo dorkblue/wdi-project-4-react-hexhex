@@ -7,6 +7,10 @@ div#banner_image img{
   height: 200px;
 }
 
+div#info-content {
+  font-size: 2px;
+}
+
 #description {
   font-family: Roboto;
   font-size: 15px;
@@ -25,8 +29,9 @@ div#banner_image img{
 }
 #findschools {
   position: absolute;
-  text-align: right;
-  width: 100px;
+  margin-top: 10px;
+  text-align: left;
+  width: 200px;
   font-size: 14px;
   padding: 4px;
   z-index: 5;
@@ -36,8 +41,8 @@ div#banner_image img{
   position: absolute;
   width: 190px;
   height: 25px;
-  left: 108px;
-  top: 170px;
+  left: 75px;
+  top: 1550px;
   z-index: 5;
   background-color: #fff;
 }
