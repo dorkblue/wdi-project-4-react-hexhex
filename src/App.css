@@ -54,15 +54,13 @@ div#brochure-header-container {
 }
 
 div#brochure-header-title {
+  width: 60%;
 }
 
 div#brochure-header-clipboard {
   display: flex;
-  justify-content: flex-end;
+  width: 40%;
 }
-
-
-
 
 div#details-container {
   width: 60%;

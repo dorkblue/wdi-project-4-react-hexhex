@@ -29,7 +29,7 @@ class Map extends React.Component {
       })
 
       autocomplete = new google.maps.places.Autocomplete(
-     /** @type {!HTMLInputElement} */ (
+       (
          document.getElementById('autocomplete'))
        )
       places = new google.maps.places.PlacesService(self.map)
@@ -221,7 +221,7 @@ class Map extends React.Component {
 // Render Map, search bar etc.
 
   render () {
-    const mapStyle = {left: 10, width: 450, height: 300, border: '1px solid black' }
+    const mapStyle = {left: 10, width: 450, height: 300, border: '1px solid black'}
     return (
 
       <div>
@@ -229,7 +229,7 @@ class Map extends React.Component {
           <input id='autocomplete' placeholder='Name of property' type='text' />
         </div>
 
-        <div>
+        <div style={{display: 'none'}}>
           <div id='info-content'>
             <table>
               <tr id='iw-url-row' class='iw_table_row'>
@@ -257,7 +257,7 @@ class Map extends React.Component {
         </div>
 
         <div id='map-listing'>
-          <div ref='map' style={mapStyle}></div>
+          <div ref='map' style={mapStyle} />
 
           <div id='listing'>
             <table id='resultsTable'>
