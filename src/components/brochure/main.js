@@ -8,9 +8,10 @@ import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import DetailsMain from './details/DetailsMain'
 import Carousell from './carousel/CarouselMain'
-import Map from './map/Map'
 import {Header, Icon, Dropdown, Segment, Divider, Button, Input} from 'semantic-ui-react'
+
 import CopyToClipboard from 'react-copy-to-clipboard'
+import Map from './map/Map'
 
 const $ = require('jquery')
 
@@ -181,7 +182,6 @@ class Brochure extends React.Component {
     const brochureDetails = this.state.brochureDetails
     const brochureBanner = this.state.brochureBanner
     return (
-
       <Segment.Group>
         <Segment>
           <div id='brochure-header-container'>
@@ -191,8 +191,7 @@ class Brochure extends React.Component {
                 <Header.Content>
                   <Dropdown text={brochureData.title}>
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure'>
-                      </Dropdown.Item>
+                      <Dropdown.Item onClick={this.deleteModalOpen} text='Delete Brochure' />
                     </Dropdown.Menu>
                   </Dropdown>
                   <Header.Subheader>
@@ -204,11 +203,10 @@ class Brochure extends React.Component {
             <div id='brochure-header-clipboard'>
               <CopyToClipboard text='LINK HERE'>
                 <div>
-                  <Input action={{color: 'teal', labelPosition: 'left', icon: 'linkify', content: 'Copy Link'}} actionPosition='left' defaultValue='LINK HERE'></Input>
+                  <Input action={{color: 'teal', labelPosition: 'left', icon: 'linkify', content: 'Copy Link'}} actionPosition='left' defaultValue='LINK HERE' />
                 </div>
               </CopyToClipboard>
             </div>
-
           </div>
           <Divider clearing />
 
@@ -221,12 +219,7 @@ class Brochure extends React.Component {
           </div>
           <div id='descriptions-details-container'>
             <div id='details-container'>
-              <h1>Property Details</h1>
-              <DetailsMain
-                data={brochureDetails}
-                edit={this.state.editDetails}
-                toggleEdit={() => this.toggleDetailsEdit()}
-                save={(e) => this.saveDetails(e)} />
+              <h1>Details Should Be Here</h1>
             </div>
             <div id='descriptions-container'>
               <DescriptionsMain
@@ -237,11 +230,6 @@ class Brochure extends React.Component {
             </div>
           </div>
           <Carousell />
-        <div id='map-container'>
-          <h1>Map of Surroundings</h1>
-          <Map />
-        </div>
-
           <Modal
             isOpen={this.state.deleteModalOpen}
             // onAfterOpen={this.afterOpenModal}
@@ -253,12 +241,15 @@ class Brochure extends React.Component {
               <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
             </div>
           </Modal>
+          <div id='map-container'>
+            <h1>Map of Surroundings</h1>
+            <Map />
+          </div>
         </Segment>
         <Segment inverted>
-
+          <h1> AGENT INFO HERE </h1>
         </Segment>
       </Segment.Group>
-
     )
   }
   componentDidMount () {
