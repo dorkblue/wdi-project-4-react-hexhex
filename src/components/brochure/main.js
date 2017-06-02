@@ -261,7 +261,7 @@ class Brochure extends React.Component {
           </Modal>
         </Segment>
         <Segment inverted>
-          <h1> AGENT INFO HERE </h1>
+
         </Segment>
       </Segment.Group>
     )
