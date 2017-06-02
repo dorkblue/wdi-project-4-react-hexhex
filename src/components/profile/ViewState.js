@@ -7,35 +7,33 @@ const ViewState = (props) => {
   let logo = props.data.logoURL !== '' ? props.data.logoURL : defaultLogo
   let profile = props.data.profileURL !== '' ? props.data.profileURL : defaultProfile
   return <div>
-    <h1>View State</h1>
-
     <dl>
-      <dt>Company Logo</dt>
+      <dt><h2>Company Logo</h2></dt>
       <dd><img style={{height: '200px'}}src={logo} /></dd>
     </dl>
     <dl>
-      <dt>Profile Pic</dt>
+      <dt><h2>Profile Picture</h2></dt>
       <dd><img style={{height: '200px'}}src={profile} /></dd>
     </dl>
-    <dl>
-      <dt>Agency</dt>
-      <dd>{props.data.agency === '' ? 'EMPTY' : props.data.agency}</dd>
+    <dl id="personalInfo">
+      <dt>Agency</dt><br />
+      <dd>{props.data.agency === '' ? 'Fill In Agency Name' : props.data.agency}</dd>
     </dl>
-    <dl>
-      <dt>Name</dt>
-      <dd>{props.data.name === '' ? 'EMPTY' : props.data.name}</dd>
+    <dl id="personalInfo">
+      <dt>Name</dt><br />
+      <dd>{props.data.name === '' ? 'Fill In Name' : props.data.name}</dd>
     </dl>
-    <dl>
-      <dt>Designation</dt>
-      <dd>{props.data.designation === '' ? 'EMPTY' : props.data.designation}</dd>
+    <dl id="personalInfo">
+      <dt>Designation</dt><br />
+      <dd>{props.data.designation === '' ? 'Fill In Designation' : props.data.designation}</dd>
     </dl>
-    <dl>
-      <dt>Mobile</dt>
-      <dd>{props.data.mobile === '' ? 'EMPTY' : props.data.mobile}</dd>
+    <dl id="personalInfo">
+      <dt>Mobile</dt><br />
+      <dd>{props.data.mobile === '' ? 'Fill In Mobile Number' : props.data.mobile}</dd>
     </dl>
-    <dl>
-      <dt>Email</dt>
-      <dd>{props.data.workEmail === '' ? 'EMPTY' : props.data.workEmail}</dd>
+    <dl id="personalInfo">
+      <dt>Email</dt><br />
+      <dd>{props.data.workEmail === '' ? 'Fill In Email' : props.data.workEmail}</dd>
     </dl>
   </div>
 }

@@ -17,6 +17,7 @@ const publicUser = (props) => {
       <button onClick={props.signinModalOpen}>Sign In</button>
       <button onClick={props.registerModalOpen}>Register</button>
     </div>
+
   </div>
 }
 

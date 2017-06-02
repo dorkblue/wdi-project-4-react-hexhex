@@ -4,6 +4,7 @@ import axios from 'axios'
 import EditState from './EditState'
 import ViewState from './ViewState'
 import $ from 'jquery'
+import {Button, Divider} from 'semantic-ui-react'
 
 function formDataConverter (arr) {
   const newObj = {}
@@ -176,21 +177,21 @@ class ProfileMain extends React.Component {
     if (this.state.editState) {
       return (
         <div>
-          <h1>My Profile Page</h1>
-          <h4>Set up namecard here</h4>
+          <h1>Profile Page</h1>
+          <h4>Set up your personal details here so that they can be viewed on your brochure.</h4>
           <EditState
             data={this.state.userData}
             saveLogo={this.saveLogo}
             saveProfilePic={this.saveProfilePic}
             updateProfile={this.updateProfile} />
-          <button onClick={this.toggleEdit}>Back</button>
+          <button color='blue' floated='left' onClick={this.toggleEdit}>Back</button>
         </div>
       )
     } else {
       return (
         <div>
-          <h1>My Profile Page</h1>
-          <h4>Set up namecard here</h4>
+          <h1>Profile Page</h1>
+          <h4>Set up your personal details here so that they can be viewed on your brochure.</h4>
           <ViewState data={this.state.userData} />
           <button onClick={this.toggleEdit}>Edit</button>
           <button onClick={this.deleteAcc}>Delete Account</button>
