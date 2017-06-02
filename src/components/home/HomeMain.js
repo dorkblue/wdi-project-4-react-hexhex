@@ -1,5 +1,6 @@
 import React from 'react'
 import {isAuthenticated} from '../../script/firebase'
+import {Header, Icon, Button} from 'semantic-ui-react'
 
 const userLoggedIn = (props) => {
   return <div>
@@ -10,14 +11,18 @@ const userLoggedIn = (props) => {
 }
 
 const publicUser = (props) => {
-  return <div>
+  return <div style={{width: '500px', margin: '0 auto'}}>
     <div>
-      <h1>Join us!</h1>
-      <h6>Sign In/Register to Continue</h6>
-      <button onClick={props.signinModalOpen}>Sign In</button>
-      <button onClick={props.registerModalOpen}>Register</button>
+      <Header as='h2' icon>
+        <Icon name='settings' />
+        Join Us!
+        <Header.Subheader>
+          Sign In/Register to Continue
+        </Header.Subheader>
+      </Header>
     </div>
-
+    <Button onClick={props.signinModalOpen}>Sign In</Button>
+    <Button onClick={props.registerModalOpen}>Register</Button>
   </div>
 }
 

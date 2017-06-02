@@ -42,7 +42,6 @@ const editState = (props) => {
       <label>Facilities:
         <input class='details' name='facilities' placeholder='Tennis Court, Swimming Pool' defaultValue={props.data.facilities}></input>
       </label><br />
-      <button onClick={(e) => props.save(e)}>Save</button>
     </form>
 
 

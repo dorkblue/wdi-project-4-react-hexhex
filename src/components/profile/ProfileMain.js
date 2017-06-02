@@ -184,7 +184,7 @@ class ProfileMain extends React.Component {
             saveLogo={this.saveLogo}
             saveProfilePic={this.saveProfilePic}
             updateProfile={this.updateProfile} />
-          <button color='blue' floated='left' onClick={this.toggleEdit}>Back</button>
+          <Button floated='left' onClick={this.toggleEdit}>Back</Button>
         </div>
       )
     } else {
@@ -193,8 +193,8 @@ class ProfileMain extends React.Component {
           <h1>Profile Page</h1>
           <h4>Set up your personal details here so that they can be viewed on your brochure.</h4>
           <ViewState data={this.state.userData} />
-          <button onClick={this.toggleEdit}>Edit</button>
-          <button onClick={this.deleteAcc}>Delete Account</button>
+          <Button onClick={this.toggleEdit}>Edit</Button>
+          <Button onClick={this.deleteAcc}>Delete Account</Button>
         </div>
       )
     }

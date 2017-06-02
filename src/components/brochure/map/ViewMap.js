@@ -38,14 +38,12 @@ class ViewMap extends React.Component {
       console.log('location res', response.data)
       this.setState({
         savedLat: response.data.lat,
-        savedLong: response.data.lng,
-        tempLat: null,
-        tempLong: null
+        savedLong: response.data.lng
       })
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.data.lat !== nextProps.data.lat && this.props.data.lng !== nextProps.data.lng) {
       console.log('nextProps', nextProps.data)
       // this.setState({

@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import {BrowserRouter, Link, Route, Redirect} from 'react-router-dom'
 import Modal from 'react-modal'
 import axios from 'axios'
-import {Divider} from 'semantic-ui-react'
+import {Divider, Button, Input, Icon} from 'semantic-ui-react'
 
 
 import $ from 'jquery'
@@ -24,6 +24,8 @@ const appElement = $('#root')
 
 const customStyles = {
   content: {
+    width: '600px',
+    height: '200px',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -167,40 +169,77 @@ class App extends Component {
   }
 
   signinModal () {
-    return <div>
-      <h1>Sign in MODAL BOX</h1>
-      <button onClick={this.closeSigninModal}>close</button>
 
-      <form id='sign_in_form'>
-        <label>
-          Email:{' '}
-          <input type='email' placeholder='Enter Email' name='email' id='email' />
-        </label>
-        <label>
-          Password:{' '}
-          <input type='password' placeholder='Enter Password' name='password' id='password' />
-        </label>
-        <button onClick={(e) => this.signin(e)}>Sign In</button>
-      </form>
-    </div>
+    return (
+      <div style={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <div>
+            <h1>Sign In</h1>
+          </div>
+          <div>
+            <Button icon='remove'onClick={this.closeSigninModal} />
+          </div>
+        </div>
+        <div>
+          <form id='sign_in_form'>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <div>
+                <Input label='Email' placeholder='example@gmail.com' id='email' name='email' type='email' />
+                {/* <label>
+                  Email:{' '}
+                  <input type='email' placeholder='Enter Email' name='email' id='email' />
+                </label> */}
+              </div>
+              <div>
+                <Input label='Password' placeholder='iloveprima' id='password' name='password' type='password' />
+                {/* <label>
+                  Password:{' '}
+                  <input type='password' placeholder='Enter Password' name='password' id='password' />
+                </label> */}
+              </div>
+            </div>
+          </form>
+        </div>
+        <div>
+          <Button positive onClick={(e) => this.signin(e)}>Register</Button>
+        </div>
+      </div>
+    )
   }
 
   registerModal () {
-    return <div>
-      <h1>Register MODAL BOX</h1>
-      <button onClick={this.closeRegisterModal}>close</button>
-
-      <form id='sign_in_form'>
-        <label>
-          Email:{' '}
-          <input type='email' placeholder='Enter Email' name='email' id='email' />
-        </label>
-        <label>
-          Password:{' '}
-          <input type='password' placeholder='Enter Password' name='password' id='password' />
-        </label>
-        <button onClick={(e) => this.register(e)}>Register</button>
-      </form>
+    return <div style={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <div>
+          <h1>Register</h1>
+        </div>
+        <div>
+          <Button icon='remove'onClick={this.closeRegisterModal} />
+        </div>
+      </div>
+      <div>
+        <form id='sign_in_form'>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <div>
+              <Input label='Email' placeholder='example@gmail.com' id='email' name='email' type='email' />
+              {/* <label>
+                Email:{' '}
+                <input type='email' placeholder='Enter Email' name='email' id='email' />
+              </label> */}
+            </div>
+            <div>
+              <Input label='Password' placeholder='iloveprima' id='password' name='password' type='password' />
+              {/* <label>
+                Password:{' '}
+                <input type='password' placeholder='Enter Password' name='password' id='password' />
+              </label> */}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div>
+        <Button positive onClick={(e) => this.register(e)}>Register</Button>
+      </div>
     </div>
   }
 
@@ -222,6 +261,7 @@ class App extends Component {
             <Modal
               isOpen={this.state.signinModalOpen}
               // onAfterOpen={this.afterOpenModal}
+              style={customStyles}
               onRequestClose={this.closeSigninModal}
               contentLabel='signinModal'>
               {this.signinModal()}
@@ -229,6 +269,7 @@ class App extends Component {
             {/* Register Modal Box */}
             <Modal
               isOpen={this.state.registerModalOpen}
+              style={customStyles}
               // onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeRegisterModal}
               contentLabel='registerModal'>
