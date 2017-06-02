@@ -18,7 +18,7 @@ import Brochure from './components/brochure/main'
 import ProfileMain from './components/profile/ProfileMain'
 import HomeMain from './components/home/HomeMain'
 
-const backendURL = 'https://blooming-ridge-43510.herokuapp.com/'
+const backendURL = 'https://cryptic-ridge-83503.herokuapp.com/'
 const appElement = $('#root')
 
 const customStyles = {
