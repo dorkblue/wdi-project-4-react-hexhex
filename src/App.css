@@ -61,6 +61,36 @@ div#picture_image2 img {
   object-fit: cover;
 }
 
+button {
+  border-radius: 6px;
+  padding: 8px 15px;
+  background-color: white;
+  border: 2px solid #4CAF50;
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+dl#personalInfo {
+  /*border: 3px solid #ccc;
+  padding: 0.5em;
+  border-radius: 8px;*/
+  border-bottom: thick dotted #ccc;
+}
+dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: left;
+  font-weight: bold;
+  color: navy;
+}
+
+dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 0.5em 0;
+}
 
 /* BROCHURE-CAROUSEL */
 button.slick-arrow {
@@ -104,16 +134,23 @@ div#brochure-header-container {
 }
 
 div#brochure-header-title {
+  width: 60%;
 }
 
 div#brochure-header-clipboard {
   display: flex;
-  justify-content: flex-end;
+  width: 40%;
 }
 
 div#details-container {
   width: 60%;
   margin: 20px 0 20px 0px;
+}
+/* BROCHURE-MAP */
+div#map-render {
+  width: 75%;
+  height: 300px;
+  border: 1px solid black;
 }
 
 div#info-content {
@@ -130,15 +167,6 @@ div#map-listing {
   font-weight: 300;
 }
 
-#listing {
-  margin-left: 15px;
-  width: 300px;
-  height: 300px;
-  overflow: auto;
-  cursor: pointer;
-  overflow-x: hidden;
-}
-
 #locationField {
   margin-bottom: 20px;
   width: 60vw;
@@ -146,6 +174,7 @@ div#map-listing {
   z-index: 5;
   background-color: #fff;
 }
+
 #controls {
   position: absolute;
   left: 300px;
@@ -154,36 +183,60 @@ div#map-listing {
   z-index: 5;
   background-color: #fff;
 }
+
 #autocomplete {
   width: 100%;
 }
+
 #country {
   width: 100%;
 }
+
 .placeIcon {
   width: 20px;
   height: 34px;
   margin: 4px;
 }
+
 .schoolIcon {
   width: 24px;
   height: 24px;
 }
+
+div#places-listing {
+  margin-left: 15px;
+  width: 25%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+div#places-results {
+  height: 100%;
+  overflow: auto;
+  cursor: pointer;
+  overflow-x: hidden;
+}
+
 #resultsTable {
   border-collapse: collapse;
-  width: 200px;
+  width: 100%;
 }
+
 #rating {
   font-size: 13px;
   font-family: Arial Unicode MS;
 }
+
 .iw_table_row {
   height: 18px;
 }
+
 .iw_attribute_name {
   font-weight: bold;
   text-align: right;
 }
+
 .iw_table_icon {
   text-align: right;
 }

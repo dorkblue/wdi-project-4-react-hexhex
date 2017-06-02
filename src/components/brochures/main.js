@@ -5,7 +5,7 @@ import {Item, Divider, Button, Input, Header, Icon, Segment} from 'semantic-ui-r
 
 import {isAuthenticated, storageKey} from '../../script/firebase'
 
-import ListItem from './ListItem'
+import ListItem from './listitem'
 
 class Brochures extends React.Component {
   constructor (props) {
