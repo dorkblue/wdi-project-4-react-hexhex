@@ -7,7 +7,9 @@ import DescriptionsMain from './descriptions/DescriptionsMain'
 import BannerMain from './banner/BannerMain'
 import Modal from 'react-modal'
 import DetailsMain from './details/DetailsMain'
-import Carousell from './carousel/CarouselMain'
+import Caro from './carousel/CarouselMain'
+import Pictures from './pictures/Pictures'
+import Picture2 from './pictures/Picture2'
 import {Header, Icon, Dropdown, Segment, Divider, Button, Input} from 'semantic-ui-react'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -45,14 +47,52 @@ class Brochure extends React.Component {
       brochureDescriptions: {},
       brochureDetails: {},
       brochureBanner: {},
+      brochurePicture: {},
+      brochurePicture2: {},
+      brochureCarousel: [],
+      uploadedImage: null,
+      uploadedImage2: null,
       editDescriptions: false,
       editBanner: false,
       editDetails: false,
-      deleteModalOpen: false
+      deleteModalOpen: false,
+      editPicture: false,
+      editPicture2: false
     }
 
     this.deleteModalOpen = this.deleteModalOpen.bind(this)
     this.closeDeleteModal = this.closeDeleteModal.bind(this)
+    this.togglePictureEdit = this.togglePictureEdit.bind(this)
+    this.saveCarouselPic = this.saveCarouselPic.bind(this)
+  }
+
+  saveCarouselPic (e, carouselKey, seq) {
+    console.log('event', e.target.files[0])
+    console.log('carouselKey', carouselKey)
+
+    let picToUpload = e.target.files[0]
+
+    const carouselDirectory = storage.ref(`/${this.props.match.params.id}-${carouselKey}`)
+    .put(picToUpload)
+    .then((snapshot) => {
+      axios({
+        method: 'PUT',
+        url: `${this.props.backendURL}carousel/${carouselKey}`,
+        data: {
+          url: snapshot.downloadURL
+        }
+      })
+      .then((response) => {
+        const brochureCarousel = this.state.brochureCarousel
+
+        console.log('brochureCarousel axios', brochureCarousel[seq])
+        brochureCarousel[seq].url = response.data.url
+
+        this.setState({
+          brochureCarousel: brochureCarousel
+        })
+      })
+    })
   }
 
   saveDescriptions (e) {
@@ -103,6 +143,60 @@ class Brochure extends React.Component {
       })
   }
 
+  savePicture (e) {
+    console.log(this.props)
+    let $picture_upload = e.target.files[0]
+
+    const pictureDirectory = storage
+      .ref(`/${this.props.match.params.id}-${this.state.brochureData.picture_key}`)
+      .put($picture_upload)
+      .then((snapshot) => {
+        axios({
+          method: 'PUT',
+          url: `${this.props.backendURL}banner/${this.state.brochureData.picture_key}`,
+          data: {
+            url: snapshot.downloadURL
+          }
+        })
+        .then((response) => {
+          this.setState({
+            brochurePicture: response.data
+          })
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      })
+  }
+
+  savePicture2 (e) {
+    console.log(this.props)
+    let $picture2_upload = e.target.files[0]
+
+    const pictureDirectory2 = storage
+      .ref(`/${this.props.match.params.id}-${this.state.brochureData.picture2_key}`)
+      .put($picture2_upload)
+      .then((snapshot) => {
+        axios({
+          method: 'PUT',
+          url: `${this.props.backendURL}banner/${this.state.brochureData.picture2_key}`,
+          data: {
+            url: snapshot.downloadURL
+          }
+        })
+        .then((response) => {
+          this.setState({
+            brochurePicture2: response.data
+          })
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      })
+  }
+
   saveDetails (e) {
     e.preventDefault()
     const detailsKey = this.state.brochureData.details_key
@@ -135,6 +229,22 @@ class Brochure extends React.Component {
     const editStatus = !this.state.editBanner
     this.setState({
       editBanner: editStatus
+    })
+  }
+
+  togglePictureEdit () {
+    const editStatus = !this.state.editPicture
+    this.setState({
+      editPicture: editStatus
+    })
+  }
+
+
+
+  togglePictureEdit2 () {
+    const editStatus = !this.state.editPicture
+    this.setState({
+      editPicture2: editStatus
     })
   }
 
@@ -181,6 +291,12 @@ class Brochure extends React.Component {
     const brochureDescriptions = this.state.brochureDescriptions
     const brochureDetails = this.state.brochureDetails
     const brochureBanner = this.state.brochureBanner
+    // const brochurePicture = this.state.brochurePicture
+    // const brochurePicture2 = this.state.brochurePicture2
+    const brochureCarousel = this.state.brochureCarousel
+
+    console.log(brochureCarousel)
+
     return (
       <Segment.Group>
         <Segment>
@@ -217,9 +333,15 @@ class Brochure extends React.Component {
               toggleEdit={() => this.toggleBannerEdit()}
               edit={this.state.editBanner} />
           </div>
+
           <div id='descriptions-details-container'>
             <div id='details-container'>
               <h1>Details Should Be Here</h1>
+              <DetailsMain
+                data={brochureDetails}
+                edit={this.state.editDetails}
+                toggleEdit={() => this.toggleDetailsEdit()}
+                save={(e) => this.saveDetails(e)} />
             </div>
             <div id='descriptions-container'>
               <DescriptionsMain
@@ -229,7 +351,31 @@ class Brochure extends React.Component {
                 save={(e) => this.saveDescriptions(e)} />
             </div>
           </div>
-          <Carousell />
+
+            <Caro
+              edit={this.state.editPicture}
+              togglePictureEdit={this.togglePictureEdit}
+              data={brochureCarousel}
+              saveCarouselPic={(e, carouselKey, seq) => this.saveCarouselPic(e, carouselKey, seq)} />
+
+            {/* <div id='picture-container'>
+              <h1>Upload Pictures</h1>
+              <Pictures
+                savePicture={(e) => this.savePicture(e)}
+                data={brochurePicture}
+                toggleEdit={() => this.togglePictureEdit()}
+                edit={this.state.editPicture} />
+            </div>
+
+            <div id='picture-container2'>
+              <h1>Upload Pictures 2</h1>
+              <Picture2
+                savePicture2={(e) => this.savePicture2(e)}
+                data={brochurePicture2}
+                toggleEdit={() => this.togglePictureEdit2()}
+                edit={this.state.editPicture2} />
+            </div> */}
+
           <Modal
             isOpen={this.state.deleteModalOpen}
             // onAfterOpen={this.afterOpenModal}
@@ -264,16 +410,37 @@ class Brochure extends React.Component {
         [
           axios.get(`${this.props.backendURL + 'descriptions/' + response.data.descriptions_key}`),
           axios.get(`${this.props.backendURL + 'details/' + response.data.details_key}`),
-          axios.get(`${this.props.backendURL + 'banner/' + response.data.banner_key}`)
+          axios.get(`${this.props.backendURL + 'banner/' + response.data.banner_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel0_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel1_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel2_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel3_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel4_key}`),
+          axios.get(`${this.props.backendURL + 'carousel/' + response.data.carousel5_key}`)
+
+
+          // axios.get(`${this.props.backendURL + 'picture/' + response.data.picture_key}`),
+          // axios.get(`${this.props.backendURL + 'picture2/' + response.data.picture2_key}`)
         ]
       )
-      .then(axios.spread((resDescriptions, resDetails, resBanner) => {
-        console.log('resBanner data', resBanner)
+      .then(axios.spread((resDescriptions, resDetails, resBanner, resCarousel0, resCarousel1, resCarousel2, resCarousel3, resCarousel4, resCarousel5) => {
+        const brochureCarousel = [
+          resCarousel0.data,
+          resCarousel1.data,
+          resCarousel2.data,
+          resCarousel3.data,
+          resCarousel4.data,
+          resCarousel5.data
+        ]
+        console.log('brochureCarousel', brochureCarousel)
         this.setState({
           brochureData: response.data,
           brochureDescriptions: resDescriptions.data,
           brochureDetails: resDetails.data,
-          brochureBanner: resBanner.data
+          brochureBanner: resBanner.data,
+          brochureCarousel: brochureCarousel
+          // brochurePicture: resPicture.data,
+          // brochurePicture2: resPicture2.data
         })
       }))
     })

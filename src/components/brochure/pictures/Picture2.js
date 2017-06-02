@@ -1,37 +1,34 @@
 import React from 'react'
 import {Image, Divider, Button, Input} from 'semantic-ui-react'
 
-const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/project-hex-hex.appspot.com/o/Alfons.png?alt=media&token=c897dfd1-882b-4792-9d7a-beb6227c1554'
+const placeholderImage = 'https://firebasestorage.googleapis.com/v0/b/project-hex-hex.appspot.com/o/-KlRmlFCYmNeImpuVAnN--KlRmlFCYmNeImpuVAnM?alt=media&token=c2bbcc53-fed2-4dbc-98e4-de095e4d99b0'
 
 const returnImage = (props) => {
-  console.log('return image', props.data)
-  let bannerImage
+  let pictureImage2
   if (props.data.url && props.data.url !== '') {
-    bannerImage = props.data.url
+    pictureImage2 = props.data.url
   } else {
-    bannerImage = defaultImage
+    pictureImage2 = placeholderImage
   }
-  console.log('BannerMain', bannerImage)
-  return bannerImage
+  return pictureImage2
 }
 
 const editState = (props) => {
   return <div>
-    <div id='banner_image'>
+    <div id='picture_image2'>
       <Image src={returnImage(props)} fluid />
     </div>
 
     <div className='config-options'>
-      <Input action={toggleEditButton(true, props.toggleEdit)} type='file' id='banner_upload' onChange={(e) => props.saveBanner(e)} />
+      <Input action={toggleEditButton(true, props.toggleEdit)} type='file' id='picture_upload2' onChange={(e) => props.savePicture2(e)} />
     </div>
   </div>
 }
 
 const viewState = (props) => {
   return <div>
-    <div id='banner_image'>
+    <div id='picture_image2'>
       <Image src={returnImage(props)} fluid />
-      {/* <img src={returnImage(props)} /> */}
     </div>
 
     <div className='config-options'>
@@ -50,7 +47,7 @@ const toggleEditButton = (ToF, toggleEdit) => {
   )
 }
 
-const BannerMain = (props) => {
+const Picture2 = (props) => {
   if (props.edit) {
     return editState(props)
   } else {
@@ -58,4 +55,4 @@ const BannerMain = (props) => {
   }
 }
 
-export default BannerMain
+export default Picture2

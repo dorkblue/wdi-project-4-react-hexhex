@@ -27,13 +27,63 @@ div#banner_image img {
   object-fit: cover;
 }
 
+/* BROCHURE-PICTURE */
+div#picture-container {
+  position: relative;
+  margin-left: -14px;
+  margin-right: -14px;
+}
+
+div#picture_image {
+  height: 100px;
+  width: 100px;
+}
+
+div#picture_image img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BROCHURE-PICTURE2 */
+div#picture-container2 {
+  position: relative;
+  margin-left: -14px;
+  margin-right: -14px;
+}
+
+div#picture_image2 {
+  height: 100px;
+  width: 100px;
+}
+
+div#picture_image2 img {
+  height: 100%;
+  object-fit: cover;
+}
+
+
 /* BROCHURE-CAROUSEL */
 button.slick-arrow {
   filter: invert(100%)
 }
 
-div#carousell-box {
+div#carousel-box {
   padding: 5px 40px 40px 40px;
+}
+
+img.carousel-pic {
+  object-fit: cover;
+  height: 300px;
+}
+
+div.carousel-pic-box {
+  height: 300px;
+}
+
+div#carousel-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 /* BROCHURE-DESCRIPTIONS-DETAILS */
@@ -60,9 +110,6 @@ div#brochure-header-clipboard {
   display: flex;
   justify-content: flex-end;
 }
-
-
-
 
 div#details-container {
   width: 60%;
