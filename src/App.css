@@ -27,6 +27,37 @@ div#banner_image img {
   object-fit: cover;
 }
 
+button {
+  border-radius: 6px;
+  padding: 8px 15px;
+  background-color: white;
+  border: 2px solid #4CAF50;
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+dl#personalInfo {
+  /*border: 3px solid #ccc;
+  padding: 0.5em;
+  border-radius: 8px;*/
+  border-bottom: thick dotted #ccc;
+}
+dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: left;
+  font-weight: bold;
+  color: navy;
+}
+
+dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 0.5em 0;
+}
+
 /* BROCHURE-CAROUSEL */
 button.slick-arrow {
   filter: invert(100%)

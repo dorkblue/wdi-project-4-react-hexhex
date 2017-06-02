@@ -6,7 +6,7 @@ Currently, agents primarily use property listing websites like [PropertyGuru](ht
 
 Bro-sure attempts to be an additional tool for agents to use on-site at a property (via tablet or otherwise) or as a followup with potential buyers. Due to the nature of Bro-sure, agents can add other sensitive but important information such as unit number and details of rejected offers.
 
-This is a full-stack [react application](https://github.com/facebookincubator/create-react-app) with a [node.js](https://nodejs.org/en/) backend, [firebase](https://firebase.google.com/) databse, storage and authentication, and [Semantic UI React](https://react.semantic-ui.com) as the front-end framework.
+This is a full-stack [react application](https://github.com/facebookincubator/create-react-app) with a [node.js](https://nodejs.org/en/) backend, [firebase](https://firebase.google.com/) database, storage and authentication, and [Semantic UI React](https://react.semantic-ui.com) as the front-end framework.
 
 ## Live Demo
 This application is deployed on Heroku.
@@ -35,7 +35,7 @@ From the real estate agent's point of view, the edit mode of the digital brochur
 Being able to interact with components in React without constant re-rendering was a big plus. The lack of hierarchy in the structure of our application also made react a good fit.
 
 ## Splitting Front-end and Back-end
-Bro-sure uses two repositories. The front-end repository holds all the react components, including states, CSS and HTML code. The [back-end repository](https://github.com/dorkblue/wdi-project-4-backend-hexhex) holds all the controllers and routers for components which require data or images to be stored. As firebase storage is not supported in node and express, we have uploaded images in the front-end and then stored the generated download URL in the back-end The firebase configuration file is also held in the [back-end repository](https://github.com/dorkblue/wdi-project-4-backend-hexhex).
+Bro-sure uses two repositories. The front-end repository holds all the react components, including states, CSS and HTML code. The [back-end repository](https://github.com/dorkblue/wdi-project-4-backend-hexhex) holds all the controllers and routers for components. As firebase storage is not supported in node and express, we have uploaded images in the front-end and then stored the generated download URL in the back-end. The firebase configuration file is also held in the [back-end repository](https://github.com/dorkblue/wdi-project-4-backend-hexhex).
 
 This split is not necessary in the current form of the react application. However, the splitting of front-end and back-end repositories enable us to create a react-native (mobile) version of this application, using the same [back-end repository](https://github.com/dorkblue/wdi-project-4-backend-hexhex), should we choose to in the future.
 

@@ -58,6 +58,7 @@ class ViewMap extends React.Component {
   }
 
   loadMap (data) {
+    console.log('loading map!');
     let self = this
     let generalAssembly = {lat: 1.308084, lng: 103.832036}
     let savedLocation = null
@@ -766,6 +767,7 @@ place.formatted_phone_number
 }
 
 function loadScript (url, callback) {
+  console.log('loading script')
 // Adding the script tag to the head as suggested before
   var head = document.getElementsByTagName('head')[0]
   var script = document.createElement('script')
