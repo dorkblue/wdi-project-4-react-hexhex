@@ -1,12 +1,44 @@
 /* eslint-disable no-undef */
 
 import React from 'react'
+import {Header} from 'semantic-ui-react'
 
 class Map extends React.Component {
+  constructor (props) {
+    super (props)
+    this.state = {
+      tempLat: null,
+      tempLong: null,
+      savedLat: null,
+      savedLong: null
+    }
+
+    this.saveLocation = this.saveLocation.bind(this)
+  }
+
+  saveLocation () {
+    console.log('this tempLat', this.state.tempLat)
+    console.log('this tempLong', this.state.tempLong)
+
+    const newLat = this.state.tempLat
+    const newLng = this.state.tempLong
+
+    this.setState({
+      savedLat: newLat,
+      savedLong: newLng,
+      tempLat: null,
+      tempLong: null
+    })
+  }
 
   componentDidMount () {
     let self = this
-    let generalAssembly = {lat: 1.308084, lng: 103.832036}
+    let generalAssembly
+    if (this.state.savedLat) {
+      generalAssembly = {lat: this.state.savedLat, lng: this.state.savedLong}
+    } else {
+      generalAssembly = {lat: 1.308084, lng: 103.832036}
+    }
 
     loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCSbxQeyVLBk8_cUUB52hILQKtP38QuFqg&libraries=places&region=sg', function () {
       let places
@@ -15,6 +47,8 @@ class Map extends React.Component {
       let MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green'
       let hostnameRegexp = new RegExp('^https?://.+?/')
       let markers = []
+
+      console.log('self.refs.map', self.refs.map)
 
       self.map = new google.maps.Map(self.refs.map, {
         center: generalAssembly,
@@ -28,25 +62,42 @@ class Map extends React.Component {
         content: document.getElementById('info-content')
       })
 
-      autocomplete = new google.maps.places.Autocomplete(
-       (
-         document.getElementById('autocomplete'))
-       )
+      autocomplete = new google.maps.places
+        .Autocomplete(document.getElementById('autocomplete'))
+      console.log('old autocomplete', autocomplete)
+
       places = new google.maps.places.PlacesService(self.map)
 
       autocomplete.addListener('place_changed', onPlaceChanged)
 
-    //  document.getElementById('country').addEventListener(
-    // 'change', setAutocompleteCountry);
+//  document.getElementById('country').addEventListener(
+// 'change', setAutocompleteCountry);
 
       function onPlaceChanged () {
         let markers = []
 
+        console.log('after onPlaceChanged autocomplete', autocomplete)
+
         let place = autocomplete.getPlace()
+        console.log('place.icon is', place.icon)
+        console.log('place.geometry.location is', place.geometry.location)
+
+        self.setState({
+          tempLat: place.geometry.location.lat(),
+          tempLong: place.geometry.location.lng()
+        })
+
+        console.log('self tempLat', self.state.tempLat)
+
+        console.log('set state liao')
+
         if (place.geometry) {
           markers.forEach(function (marker) {
+            console.log(marker)
             marker.setMap(null)
           })
+
+          console.log('markers', markers)
 
           let icon = {
             url: place.icon,
@@ -56,13 +107,15 @@ class Map extends React.Component {
             scaledSize: new google.maps.Size(25, 25)
           }
 
-    // Create a marker for each place.
+// Create a marker for each place.
           markers.push(new google.maps.Marker({
             map: self.map,
             icon: icon,
             title: place.name,
             position: place.geometry.location
           }))
+
+          console.log('markers', markers)
 
           self.map.panTo(place.geometry.location)
           self.map.setZoom(15)
@@ -79,23 +132,25 @@ class Map extends React.Component {
           types: ['school', 'doctor', 'grocery_or_supermarket']
         }
 
+        console.log(places)
+
         places.nearbySearch(search, function (results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             clearResults()
             clearMarkers()
-      // Create a marker for each school found, and
-      // assign a letter of the alphabetic to each marker icon.
+// Create a marker for each school found, and
+// assign a letter of the alphabetic to each marker icon.
             for (var i = 0; i < results.length; i++) {
               var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26))
               var markerIcon = MARKER_PATH + markerLetter + '.png'
-        // Use marker animation to drop the icons incrementally on the map.
+// Use marker animation to drop the icons incrementally on the map.
               markers[i] = new google.maps.Marker({
                 position: results[i].geometry.location,
                 animation: google.maps.Animation.DROP,
                 icon: markerIcon
               })
-        // If the user clicks a school marker, show the details of that hotel
-        // in an info window.
+// If the user clicks a school marker, show the details of that hotel
+// in an info window.
               markers[i].placeResult = results[i]
               google.maps.event.addListener(markers[i], 'click', showInfoWindow)
               setTimeout(dropMarker(i), i * 100)
@@ -155,34 +210,35 @@ class Map extends React.Component {
 // Get the place details for a school. Show the information in an info window,
 // anchored on the marker for the school that the user selected.
       function showInfoWindow () {
+        console.log('infoWindow', infoWindow)
         let marker = this
         places.getDetails({placeId: marker.placeResult.place_id},
-      function (place, status) {
-        if (status !== google.maps.places.PlacesServiceStatus.OK) {
-          return
-        }
-        infoWindow.open(self.map, marker)
-        buildIWContent(place)
-      })
+        function (place, status) {
+          if (status !== google.maps.places.PlacesServiceStatus.OK) {
+            return
+          }
+          infoWindow.open(self.map, marker)
+          buildIWContent(place)
+        })
       }
 
 // Load the place information into the HTML elements used by the info window.
       function buildIWContent (place) {
         document.getElementById('iw-icon').innerHTML = '<img class="schoolIcon" ' +
-      'src="' + place.icon + '"/>'
+'src="' + place.icon + '"/>'
         document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
-      '">' + place.name + '</a></b>'
+'">' + place.name + '</a></b>'
         document.getElementById('iw-address').textContent = place.vicinity
 
         if (place.formatted_phone_number) {
           document.getElementById('iw-phone-row').style.display = ''
           document.getElementById('iw-phone').textContent =
-        place.formatted_phone_number
+place.formatted_phone_number
         } else {
           document.getElementById('iw-phone-row').style.display = 'none'
         }
 
-  // Rating for establishment
+// Rating for establishment
         if (place.rating) {
           var ratingHtml = ''
           for (var i = 0; i < 5; i++) {
@@ -198,8 +254,8 @@ class Map extends React.Component {
           document.getElementById('iw-rating-row').style.display = 'none'
         }
 
-  // The regexp isolates the first part of the URL (domain plus subdomain)
-  // to give a short URL for displaying in the info window.
+// The regexp isolates the first part of the URL (domain plus subdomain)
+// to give a short URL for displaying in the info window.
         if (place.website) {
           var fullUrl = place.website
           var website = hostnameRegexp.exec(place.website)
@@ -213,7 +269,6 @@ class Map extends React.Component {
           document.getElementById('iw-website-row').style.display = 'none'
         }
       }
-
 // closing brackets for loadScript
     })
   }
@@ -221,12 +276,16 @@ class Map extends React.Component {
 // Render Map, search bar etc.
 
   render () {
-    const mapStyle = {left: 10, width: 450, height: 300, border: '1px solid black'}
+    const saveButton = props.draft ? '<button onClick={this.saveLocation}>SAVE</button>' : ''
     return (
 
       <div>
+        <Header icon='map' as='h2' content='Map of Surroundings' />
+
         <div id='locationField'>
-          <input id='autocomplete' placeholder='Name of property' type='text' />
+          <input id='autocomplete' placeholder='Name of property' type='text' defaultValue='ion orchard' />
+          {saveButton}
+          {/* <button onClick={this.saveLocation}>SAVE</button> */}
         </div>
 
         <div style={{display: 'none'}}>
@@ -257,34 +316,34 @@ class Map extends React.Component {
         </div>
 
         <div id='map-listing'>
-          <div ref='map' style={mapStyle} />
-
-          <div id='listing'>
-            <table id='resultsTable'>
-              <tbody id='results' />
-            </table>
+          <div id='map-render' ref='map' />
+          <div id='places-listing'>
+            <Header content='Nearby Amenities' />
+            <div id='places-results'>
+              <table id='resultsTable'>
+                <tbody id='results' />
+              </table>
+            </div>
           </div>
         </div>
-
       </div>
-
     )
   }
 }
 
 function loadScript (url, callback) {
-    // Adding the script tag to the head as suggested before
+// Adding the script tag to the head as suggested before
   var head = document.getElementsByTagName('head')[0]
   var script = document.createElement('script')
   script.type = 'text/javascript'
   script.src = url
 
-    // Then bind the event to the callback function.
-    // There are several events for cross browser compatibility.
+// Then bind the event to the callback function.
+// There are several events for cross browser compatibility.
   script.onreadystatechange = callback
   script.onload = callback
 
-    // Fire the loading
+// Fire the loading
   head.appendChild(script)
 }
 

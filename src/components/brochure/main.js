@@ -12,6 +12,7 @@ import {Header, Icon, Dropdown, Segment, Divider, Button, Input} from 'semantic-
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Map from './map/Map'
+import ViewMap from './map/ViewMap'
 
 const $ = require('jquery')
 
@@ -45,9 +46,11 @@ class Brochure extends React.Component {
       brochureDescriptions: {},
       brochureDetails: {},
       brochureBanner: {},
+      brochureLocation: {lat: 1.2800945, lng: 103.85094909999998},
       editDescriptions: false,
       editBanner: false,
       editDetails: false,
+      editLocation: true,
       deleteModalOpen: false
     }
 
@@ -181,6 +184,7 @@ class Brochure extends React.Component {
     const brochureDescriptions = this.state.brochureDescriptions
     const brochureDetails = this.state.brochureDetails
     const brochureBanner = this.state.brochureBanner
+    const brochureLocation = this.state.brochureLocation
     return (
       <Segment.Group>
         <Segment>
@@ -220,6 +224,11 @@ class Brochure extends React.Component {
           <div id='descriptions-details-container'>
             <div id='details-container'>
               <h1>Details Should Be Here</h1>
+              <DetailsMain
+                data={brochureDetails}
+               edit={this.state.editDetails}
+               toggleEdit={() => this.toggleDetailsEdit()}
+               save={(e) => this.saveDetails(e)} />
             </div>
             <div id='descriptions-container'>
               <DescriptionsMain
@@ -230,6 +239,15 @@ class Brochure extends React.Component {
             </div>
           </div>
           <Carousell />
+          <div id='map-container'>
+            {/* <ViewMap draft={this.state.editLocation} data={{lat: 1.23123123, lng: 1.12312321}} /> */}
+            <ViewMap
+              draft={this.state.editLocation}
+              data={brochureLocation}
+              backendURL={this.props.backendURL}
+              locationKey={this.state.brochureData.location_key} />
+            {/* <Map /> */}
+          </div>
           <Modal
             isOpen={this.state.deleteModalOpen}
             // onAfterOpen={this.afterOpenModal}
@@ -241,10 +259,6 @@ class Brochure extends React.Component {
               <button onClick={() => this.deleteBrochure()}>Yes</button><button onClick={this.closeDeleteModal}>No</button>
             </div>
           </Modal>
-          <div id='map-container'>
-            <h1>Map of Surroundings</h1>
-            <Map />
-          </div>
         </Segment>
         <Segment inverted>
           <h1> AGENT INFO HERE </h1>
@@ -264,16 +278,18 @@ class Brochure extends React.Component {
         [
           axios.get(`${this.props.backendURL + 'descriptions/' + response.data.descriptions_key}`),
           axios.get(`${this.props.backendURL + 'details/' + response.data.details_key}`),
-          axios.get(`${this.props.backendURL + 'banner/' + response.data.banner_key}`)
+          axios.get(`${this.props.backendURL + 'banner/' + response.data.banner_key}`),
+          axios.get(`${this.props.backendURL + 'location/' + response.data.location_key}`)
         ]
       )
-      .then(axios.spread((resDescriptions, resDetails, resBanner) => {
-        console.log('resBanner data', resBanner)
+      .then(axios.spread((resDescriptions, resDetails, resBanner, resLocation) => {
+        console.log('resLocation data', resLocation)
         this.setState({
           brochureData: response.data,
           brochureDescriptions: resDescriptions.data,
           brochureDetails: resDetails.data,
-          brochureBanner: resBanner.data
+          brochureBanner: resBanner.data,
+          brochureLocation: resLocation.data
         })
       }))
     })

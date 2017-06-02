@@ -66,6 +66,12 @@ div#details-container {
   width: 60%;
   margin: 20px 0 20px 0px;
 }
+/* BROCHURE-MAP */
+div#map-render {
+  width: 75%;
+  height: 300px;
+  border: 1px solid black;
+}
 
 div#info-content {
   font-size: 10px;
@@ -81,15 +87,6 @@ div#map-listing {
   font-weight: 300;
 }
 
-#listing {
-  margin-left: 15px;
-  width: 300px;
-  height: 300px;
-  overflow: auto;
-  cursor: pointer;
-  overflow-x: hidden;
-}
-
 #locationField {
   margin-bottom: 20px;
   width: 60vw;
@@ -97,6 +94,7 @@ div#map-listing {
   z-index: 5;
   background-color: #fff;
 }
+
 #controls {
   position: absolute;
   left: 300px;
@@ -105,36 +103,60 @@ div#map-listing {
   z-index: 5;
   background-color: #fff;
 }
+
 #autocomplete {
   width: 100%;
 }
+
 #country {
   width: 100%;
 }
+
 .placeIcon {
   width: 20px;
   height: 34px;
   margin: 4px;
 }
+
 .schoolIcon {
   width: 24px;
   height: 24px;
 }
+
+div#places-listing {
+  margin-left: 15px;
+  width: 25%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+div#places-results {
+  height: 100%;
+  overflow: auto;
+  cursor: pointer;
+  overflow-x: hidden;
+}
+
 #resultsTable {
   border-collapse: collapse;
-  width: 200px;
+  width: 100%;
 }
+
 #rating {
   font-size: 13px;
   font-family: Arial Unicode MS;
 }
+
 .iw_table_row {
   height: 18px;
 }
+
 .iw_attribute_name {
   font-weight: bold;
   text-align: right;
 }
+
 .iw_table_icon {
   text-align: right;
 }
