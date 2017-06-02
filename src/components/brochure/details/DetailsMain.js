@@ -1,11 +1,19 @@
 import React from 'react'
+import {Header, Icon, Button} from 'semantic-ui-react'
 
 const editState = (props) => {
   console.log('editstate props', props)
   return <div>
-    <h4>
-      Details Edit Mode
-    </h4>
+    <div id='detail-header'>
+      <Header as='h2' icon='list layout' content='Property Details' />
+      <div>
+        <Button.Group>
+          <Button positive icon='save' onClick={(e) => props.save(e)} />
+          <Button.Or />
+          {toggleEditButton(true, props.toggleEdit)}
+        </Button.Group>
+      </div>
+    </div>
     <form id='details-form'>
       <label>Price:
         <input class='details' name='price' placeholder='$$$$' defaultValue={props.data.price}></input>
@@ -37,16 +45,18 @@ const editState = (props) => {
       <button onClick={(e) => props.save(e)}>Save</button>
     </form>
 
-    {toggleEditButton(true, props.toggleEdit)}
+
   </div>
 }
 
 const viewState = (props) => {
   return <div>
-    <h4>
-      Details View Mode
-    </h4>
-
+    <div id='detail-header'>
+      <Header as='h2' icon='list layout' content='Property Details' />
+      <div>
+        {toggleEditButton(false, props.toggleEdit)}
+      </div>
+    </div>
     <p>
       Price: {props.data.price} <br />
       Address: {props.data.address} <br />
@@ -58,14 +68,16 @@ const viewState = (props) => {
       TOP: {props.data.top} <br />
       Facilities: {props.data.facilities} <br />
     </p>
-    {toggleEditButton(false, props.toggleEdit)}
   </div>
 }
 
 const toggleEditButton = (ToF, toggleEdit) => {
   const button = ToF ? 'Back' : 'Edit'
+  const buttonIcon = ToF ? 'remove' : 'wizard'
 
-  return <button onClick={() => toggleEdit()}>{button}</button>
+  return (
+    <Button icon={buttonIcon} onClick={() => toggleEdit()} />
+  )
 }
 
 const DetailsMain = (props) => {

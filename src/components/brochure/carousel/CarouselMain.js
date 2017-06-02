@@ -40,7 +40,7 @@ class Caro extends React.Component {
         <div>
           <div id='carousel-header'>
             <Header as='h2'>
-              <Icon name='plug' />
+              <Icon name='image' />
               <Header.Content>
                 Photos of Property
               </Header.Content>
@@ -95,7 +95,7 @@ class Caro extends React.Component {
         <div>
           <div id='carousel-header'>
             <Header as='h2'>
-              <Icon name='plug' />
+              <Icon name='image' />
               <Header.Content>
                 Photos of Property
               </Header.Content>

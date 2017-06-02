@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 
 import React from 'react'
-import {Header} from 'semantic-ui-react'
+import {Header, Button, Input} from 'semantic-ui-react'
 import axios from 'axios'
+
 
 class ViewMap extends React.Component {
   constructor (props) {
@@ -716,12 +717,16 @@ place.formatted_phone_number
 
       <div>
         <Header icon='map' as='h2' content='Map of Surroundings' />
-
-        <div id='locationField'>
-          <input id='autocomplete' placeholder='Name of property' type='text' />
-          {saveButton}
-          {/* <button onClick={this.saveLocation}>SAVE</button> */}
+        <div id='map-header'>
+          <div>
+            <Button onClick={this.saveLocation} content='Save' icon='save' labelPosition='right' />
+          </div>
+          <div id='locationField'>
+            <Input style={{width: '100%'}} id='autocomplete' placeholder='Name of property' type='text' />
+            {/* <button onClick={this.saveLocation}>SAVE</button> */}
+          </div>
         </div>
+
 
         <div style={{display: 'none'}}>
           <div id='info-content'>

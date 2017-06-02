@@ -310,9 +310,9 @@ class Brochure extends React.Component {
               </Header>
             </div>
             <div id='brochure-header-clipboard'>
-              <CopyToClipboard text='LINK HERE'>
+              <CopyToClipboard text={this.props.match.params.id}>
                 <div>
-                  <Input action={{color: 'teal', labelPosition: 'left', icon: 'linkify', content: 'Copy Link'}} actionPosition='left' defaultValue='LINK HERE' />
+                  <Input action={{color: 'teal', labelPosition: 'left', icon: 'linkify', content: 'Copy Link'}} actionPosition='left' defaultValue={this.props.match.params.id} />
                 </div>
               </CopyToClipboard>
             </div>
@@ -329,7 +329,6 @@ class Brochure extends React.Component {
 
           <div id='descriptions-details-container'>
             <div id='details-container'>
-              <h1>Details Should Be Here</h1>
               <DetailsMain
                 data={brochureDetails}
                 edit={this.state.editDetails}
@@ -421,7 +420,7 @@ class Brochure extends React.Component {
         })
       }))
     })
-    .catch((err) => { 
+    .catch((err) => {
       console.log(err)
     })
   }

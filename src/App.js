@@ -18,7 +18,8 @@ import Brochure from './components/brochure/main'
 import ProfileMain from './components/profile/ProfileMain'
 import HomeMain from './components/home/HomeMain'
 
-const backendURL = 'https://cryptic-ridge-83503.herokuapp.com/'
+// const backendURL = 'https://cryptic-ridge-83503.herokuapp.com/'
+const backendURL = 'http://localhost:7777/'
 const appElement = $('#root')
 
 const customStyles = {

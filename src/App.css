@@ -127,6 +127,12 @@ div#descriptions-container {
   margin: 20px 0 20px 5px;
 }
 
+div#detail-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 /* BROCHURE-HEADER */
 div#brochure-header-container {
    display: flex;
@@ -153,6 +159,12 @@ div#map-render {
   border: 1px solid black;
 }
 
+div#map-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 div#info-content {
   font-size: 10px;
 }
@@ -169,7 +181,7 @@ div#map-listing {
 
 #locationField {
   margin-bottom: 20px;
-  width: 60vw;
+  width: 100%;
   height: 25px;
   z-index: 5;
   background-color: #fff;
